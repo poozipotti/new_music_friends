@@ -6,6 +6,7 @@
     "axios": "^0.18.0",
     "bcrypt": "^2.0.0",
     "bluebird": "^3.5.1",
+    "concurrently": "^3.5.1",
     "express": "^4.16.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
@@ -21,7 +22,7 @@
     "socket.io": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently  \"react-scripts start\" \"node ChatServer/chatServer.js \" \"node ChatServer/api.js \"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
