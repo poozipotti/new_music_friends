@@ -14,18 +14,18 @@ io.on('connection',(socket)=> {
         console.log(message);
     });
     socket.on('login', username => {
+		console.log(`${username} logged in`);
         socket.join(username);
-        io.emit("login",username);
     });
     socket.on('subscribe', channelId=> {
         console.log(`successful join on ${channelId}`)
         socket.join(channelId);
     });
-    socket.on('startChat', users => {
+    socket.on('startChat', chat => {
        let chatId = uuid.v4()
-       users.forEach( (user) => {
-          console.log(`subscribing ${user} to ${chatId}`);
-          io.to(user).emit('subscribe',{_id:chatId,users:users,chatLog:[]});
+		console.log("starting chat with users" + chat.usernames);
+       chat.usernames.forEach( (user) => {
+          io.to(user).emit('subscribe',chat);
         });
     });
 });

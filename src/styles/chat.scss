@@ -33,9 +33,6 @@
 } 
 //sass for the submit (the area you type a message in
 #submitBox{
-    position:absolute;
-    bottom: 0;
-    left:0;
     width:100%;
     input{
         border-right: none;
@@ -61,18 +58,36 @@
 //for the chat log (the messages)
 #logBox{
     width:100%;
+	min-height: 650px;
+	height: 650px;
+	overflow: auto;
     .message{
         p{
             width:100%;
+			
         }
     }
    .own-message{
-        text-align:right;
-        
+		background-color: $light-blue;
+		border: 3px solid $light-blue;
+		color: $dark-primary;
+		border-radius:4px;
+		width:40%;
+		padding-left: 15px;
+		margin-top: 20px;
     } 
 
    .other-message{
        text-align:left ;
+		background-color: $dark-primary;
+		border: 3px solid $dark-primary;
+		color: $light-blue;
+		border-radius:4px;
+		width:40%;
+		margin-left:60%;
+		margin:10;
+		padding-left: 15px;
+		margin-top: 20px;
     }
 }
 

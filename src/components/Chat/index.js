@@ -16,30 +16,28 @@ class Chat extends Component {
 			activeChat: null
         };
 
-        //this.updateMessages = this.updateMessages.bind(this);
+        this.updateMessages = this.updateMessages.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
         this.updateUsers = this.updateUsers.bind(this);
-        this.startChat = this.startChat.bind(this);
+        this.addChat = this.addChat.bind(this);
         this.setActiveChat = this.setActiveChat.bind(this);
         
   }
   async componentDidMount(){
+		let allChats = null;
         try{
-            let allChats = await axios.get(`http://localhost:4000/users/${this.props.username}/chats`);
+            allChats = await axios.get(`http://localhost:4000/users/${this.props.username}/chats`);
             this.setState({joinedChats:allChats.data});
-            allChats.data.forEach(chat => {
-                this.state.socket.emit("subscribe",chat._id);
-                let temp = this.state.joinedChats;
-                temp = temp.concat([chat]);
-                this.setState({joinedChats:temp});
-            });
-	
+			for(let i=0;i<allChats.data.length;i++){
+				this.state.socket.emit("subscribe",allChats.data[i]._id);
+			}
         }catch(e){
             console.log("ERROR getting chats");
             console.log(e)
         }
+		
         //lets the chat server know that the user has logged in 
-        this.state.socket.emit("login",this.props.uid);
+        this.state.socket.emit("login",this.props.username);
         //receive a chat message, update messages
         this.state.socket.on("chatMessage", (message) => {
             this.updateMessages(message);
@@ -67,12 +65,11 @@ class Chat extends Component {
     let chatIndex = this.getChatIndex(message.activeChat);
     console.log("added message to chat" + message.activeChat);
     console.log("chat log" + temp[chatIndex]);
-    temp[chatIndex].chatLog = temp[chatIndex].chatLog.concat([message]);
+    temp[chatIndex].messages.push(message);;
     console.log("chat log after add" + temp[chatIndex]);
     console.log(temp);
 
     this.setState({joinedChats:temp});
-    //send post request
   }
    /// methods to update the users that have logged in////
   updateUsers(uid){
@@ -82,11 +79,6 @@ class Chat extends Component {
     let temp=this.state.users.concat([uid]);
     this.setState({users:temp});
   }
-  ////methods to add chats, and set which chat is currently active/////
-  startChat(users){ //this method creates a new chat for users
-    console.log(`\n\n\n\n\n\n\n =====starting chat with users===== \n${users} \n\\n\n\n\n`);
-    this.state.socket.emit("startChat",users);
-  } 
   setActiveChat(id){
             console.log("setting active chat!");
             let index = 0;
@@ -116,6 +108,7 @@ class Chat extends Component {
         try{    
             let response = await axios.post('http://localhost:4000/chats',{usernames:usernames});
             if(!response.data.error){
+				this.state.socket.emit("startChat",response.data);
                 let temp = this.state.joinedChats;
                 temp = temp.concat([response.data]);
                 this.setState({joinedChats:temp});
@@ -132,7 +125,7 @@ class Chat extends Component {
     let submit = null;
     let log= null;
     if(this.state.activeChat != null && this.state.joinedChats[this.state.activeChat] != undefined){
-        log=<Log chatLog={this.state.joinedChats[this.state.activeChat].messages} roomTitle="chat" username={this.props.uid}/>
+        log=<Log chatLog={this.state.joinedChats[this.state.activeChat].messages} roomTitle="chat" username={this.props.username}/>
         submit= <Submit messages={this.state.messages} sendMessage={this.sendMessage}/>;
     }
     return (

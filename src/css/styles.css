@@ -22,9 +22,6 @@
     padding-top: 30px; }
 
 #submitBox {
-  position: absolute;
-  bottom: 0;
-  left: 0;
   width: 100%; }
   #submitBox input {
     border-right: none;
@@ -46,13 +43,31 @@
     padding: none; }
 
 #logBox {
-  width: 100%; }
+  width: 100%;
+  min-height: 650px;
+  height: 650px;
+  overflow: auto; }
   #logBox .message p {
     width: 100%; }
   #logBox .own-message {
-    text-align: right; }
+    background-color: #D2E9F2;
+    border: 3px solid #D2E9F2;
+    color: #605583;
+    border-radius: 4px;
+    width: 40%;
+    padding-left: 15px;
+    margin-top: 20px; }
   #logBox .other-message {
-    text-align: left; }
+    text-align: left;
+    background-color: #605583;
+    border: 3px solid #605583;
+    color: #D2E9F2;
+    border-radius: 4px;
+    width: 40%;
+    margin-left: 60%;
+    margin: 10;
+    padding-left: 15px;
+    margin-top: 20px; }
 
 /*!
  * Bootstrap v4.0.0-beta.2 (https://getbootstrap.com)

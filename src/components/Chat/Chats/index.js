@@ -5,12 +5,10 @@ class ChatsPanel extends Component {
         super(props);
   };
   render() {
-    console.log("chats in the chatpanel component " + this.props.joinedChats); 
     let ChatList = null;
     if(this.props.joinedChats.length >0){
         ChatList = this.props.joinedChats.map( (chat) =>{
             if(chat != null){
-                    console.log("this is a chat " + JSON.stringify(chat));
                     return(<button
                             key={uuid.v4()}
                             value={chat._id}
@@ -20,7 +18,6 @@ class ChatsPanel extends Component {
            }
         });
     }
-    console.log("this is the ChatList" + ChatList);
     return (
         <div id="userBox">
            <h1>Chats</h1> 
