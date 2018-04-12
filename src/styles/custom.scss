@@ -1,0 +1,97 @@
+@import "variables";
+@import "chat.scss";
+@import "./bootstrap/scss/bootstrap.scss";
+
+
+
+* {
+    box-sizing: border-box;
+}
+html,body{
+    background: $light-primary;
+    font-size: $primary-font-size;
+}
+
+p {
+    font-size: $secondary-font-size;
+}
+.mainHeader{
+	background: $light-blue;
+	border-bottom: 5px solid $main-brand;
+	h1{
+		color: $main-brand;
+	}
+}
+.loginContainer{
+	background-color: $light-primary;
+}
+#loginBox{
+	margin-top: 100px;
+	background-color: $main-brand;
+	button{
+		background: 0 0;
+		border-radius: 4px;
+		cursor: pointer;
+		display: block;
+		height: 60px;
+		line-height: 60px;
+		padding: 0 30px 0 25px;
+		position: relative;
+		border: 4px solid $light-primary;
+		font-size: 1.3em;
+		font-weight: bold;
+		color: $light-primary;
+		overflow: hidden;
+		float: right;
+	}
+	input{
+		width: 90%;
+		background: 0 0;
+		background-color: lighten($main-brand,7);
+		border-radius: 2px;
+		border: 4px solid $light-primary;
+		color: $light-primary;
+		font-size: 1.3em;
+		&::placeholder{
+			color: $light-primary;
+			font-style:italic;
+			opacity: .8;	
+		}
+	}
+}
+button{
+	background: 0 0;
+	border-radius: 4px;
+	cursor: pointer;
+	display: block;
+	height: 60px;
+	line-height: 60px;
+	padding: 0 30px 0 25px;
+	position: relative;
+	border: 4px solid $main-brand;
+	font-size: 1.3em;
+	font-weight: bold;
+	color: $main-brand;
+	overflow: hidden;
+	float: right;
+	&:hover{
+		background-color: $main-brand;
+		color: $light-primary;
+	}
+}
+.userPanel{
+	position:fixed;
+	border: 4px solid $main-brand;
+	background-color:$light-blue;
+	top:(100%-60%)/2+10%;
+	left:(100%-30%)/2;
+	width: 30%;
+	height: 60%;
+	z-index: 4;
+	button{
+		width: 100%;
+	}
+	h1{
+		text-align: center;
+	}
+}

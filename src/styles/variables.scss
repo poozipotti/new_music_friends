@@ -1,0 +1,19 @@
+$light-blue: #D2E9F2;
+$light-primary: #F8F7F3;
+$light-accent: #9A9B9E;
+$main-brand: #F3544F;
+$dark-accent: #A09696;
+$dark-primary: #605583;
+$theme-colors: (
+  primary: $main-brand,
+  secondary: $light-accent,
+  success: $dark-primary,
+  info: $dark-primary,
+  warning: $dark-primary,
+  danger: $dark-primary,
+  light: $light-primary,
+  dark: $dark-primary
+);
+$body-background: #F8F7F3;
+$primary-font-size: 14pt;
+$secondary-font-size: $primary-font-size / 2.5pt;

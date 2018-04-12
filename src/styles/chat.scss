@@ -1,0 +1,83 @@
+//sass for the main chatbox
+
+@import "variables";
+
+.chatBox{
+    min-height:80vh;
+}
+
+//sass for the add user button this can be used in multiple places
+ #userBox{
+    background:#FDFDFD;
+    min-height: 100%;
+    margin-right: 0;
+	border-right:solid $main-brand 5px ;
+    button{
+        background: none;
+        width:100%;
+        //border-bottom: 1px solid black;
+        //border-top: 1px solid black;
+        border:none;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    button:hover{
+         background:rgba(0,0,0,.1);
+    }
+    h1{
+		color: $dark-primary;
+        width:100%;
+        margin-bottom: 10px;
+        padding-top: 30px;
+    }
+} 
+//sass for the submit (the area you type a message in
+#submitBox{
+    position:absolute;
+    bottom: 0;
+    left:0;
+    width:100%;
+    input{
+        border-right: none;
+        border-left: none;
+        boder-bottom: none;
+        border-top: 2px solid black;
+        width:90%;
+        margin-left:0;
+        height:50px;
+        padding:none;
+    }
+    button{
+        width:10%;
+        height:50px ;
+        border-right: none;
+        border-left: none;
+        border-bottom:none;
+        border-top: 2px solid black;
+        background: #f5f5f5;
+        padding:none;
+    } 
+}
+//for the chat log (the messages)
+#logBox{
+    width:100%;
+    .message{
+        p{
+            width:100%;
+        }
+    }
+   .own-message{
+        text-align:right;
+        
+    } 
+
+   .other-message{
+       text-align:left ;
+    }
+}
+
+
+
+
+
+

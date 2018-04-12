@@ -1,0 +1,50 @@
+/*
+	white:
+	F8F7F3
+	light:
+	D2E9F2
+	accent:
+	9A9B9E
+	main:
+	F35C4F
+	dark:
+	605583
+	accent:
+	A09596
+	
+
+*/
+body{
+ background-color: #f8f7f3; 
+}
+.App {
+  text-align: center;
+  background-color: #d2E9F2
+}
+
+.App-logo {
+  height: 40px;
+}
+h1{
+  color: #f35c4f;
+}
+.App-header {
+  background-color: #d2E9F2; 
+  height: 90px;
+  padding: 20px;
+  color: white;
+  border-bottom: 5px solid #f35c4f; 
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
