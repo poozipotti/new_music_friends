@@ -10,6 +10,7 @@ const bcrypt = require("bcrypt");
 		email: the users email
 		password: password hash (hashed using bcrypt),
 		chats: list of the users chats (theis field should only be changed by the addChat and removeChat functions,
+		sessionID: if the user has logged in gives a session id
 			
 	}
 */
@@ -30,6 +31,17 @@ let exportedMethods = {
         const userCollection = await users();
         try {
             let user = await userCollection.findOne({ _id: id });
+            if (!user) return { error: "User not found" };
+            return user;
+        } catch (e) {
+            console.log("there was an error");
+            console.log(e);
+        }
+    },
+    async getUserBySessionId(sessionId) {
+        const userCollection = await users();
+        try {
+            let user = await userCollection.findOne({ sessionId: sessionId });
             if (!user) return { error: "User not found" };
             return user;
         } catch (e) {
@@ -63,7 +75,8 @@ let exportedMethods = {
 				username: username,
 				email: email,
 				password: hashedPassword,
-				chats: []
+				chats: [],
+				sessionId: null
             };
             let addedUser = await userCollection.insertOne(newUser);
             return this.getUserById(addedUser.insertedId);
@@ -117,13 +130,15 @@ let exportedMethods = {
     },
     async verifyUser(username,password){
 		let data = null;		
+		let sessionId = uuid.v4();
         const userCollection = await users();
 		data = await userCollection.findOne({username:username});
 		if(!data){
 			return ({verified: false});
 		}else{
+			await userCollection.updateOne({username:username},{$set: {sessionId:sessionId}});
 			let verified = await bcrypt.compare(password,data.password);	
-			return ({verified: verified});
+			return ({verified: verified,sessionId:sessionId});
 		}
 	}
 };

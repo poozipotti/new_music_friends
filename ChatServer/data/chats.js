@@ -30,22 +30,28 @@ let exportedMethods = {
     async addChat(usernames){
         let newchat = {
 			_id: uuid.v4(),
-			usernames: usernames,
+			users: [],
 			messages: []
 		}; 
 		const chatCollection = await chats();
 		const userCollection = await users();
-		let usersFound =await  userCollection.find({username : {$in : newchat.usernames}}).toArray();
+		usersFound = [];
+		try{
+			usersFound =await  userCollection.find({username : {$in : usernames}});
+			console.log(usersFound.toArray());
+		} catch (e){
+			console.log(e);
+		}
 		usersFound = usersFound.length;	
 		console.log(`found ${usersFound}/${newchat.usernames.length} users`);
-		if(usersFound != newchat.usernames.length){
+		if(usersFound != newchat.users.length){
 			throw "some users not found";
 			return;
 		}	
 		try{
-			for(let i=0;i<newchat.usernames.length;i++){
+			for(let i=0;i<users.length;i++){
 				try{
-					await userData.addChat(newchat.usernames[i],newchat._id);
+					await userData.addChat(usernames[i],newchat._id);
 				}catch (e){
 					throw e;
 					break;	
@@ -84,8 +90,8 @@ let exportedMethods = {
     async addUser(chatId,username){
         try{
             const chatCollection = await chats();
-			await userData.addChat(newchat.usernames[i],newchat._id);
-            let response = await chatCollection.updateOne({_id:id},{$push: {users:username}});
+			await userData.addChat(newchat.users[i].username,newchat._id);
+            let response = await chatCollection.updateOne({_id:id},{$push: {users: {username:username,song:"hey jude"} } });
             return response; 
             
         } catch (e) {

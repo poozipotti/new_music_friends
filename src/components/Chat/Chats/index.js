@@ -13,7 +13,8 @@ class ChatsPanel extends Component {
                             key={uuid.v4()}
                             value={chat._id}
                             onClick={e => {this.props.setActiveChat(e.target.value)}}>
-                            {chat.usernames.toString()}
+							//TODO make the chats named way better
+                            {chat.users[1].username}
                             </button>);
            }
         });

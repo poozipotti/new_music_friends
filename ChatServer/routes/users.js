@@ -25,6 +25,17 @@ router.post("/login",async (req, res) => {
 	}
 	res.json(data);
 });
+router.get("/login/:sessionId",async (req, res) => {
+	let data = null;
+	let user = req.body;
+	try{
+		data = await userData.getUserBySessionId(req.params.sessionId); 
+	}catch (e){
+		console.log(e);
+		data = {error: e};
+	}
+	res.json(data);
+});
 router.post("/", async (req, res) => {
 	userInfo = req.body;	
 	let data = null;		

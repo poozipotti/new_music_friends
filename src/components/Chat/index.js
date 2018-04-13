@@ -113,7 +113,7 @@ class Chat extends Component {
                 temp = temp.concat([response.data]);
                 this.setState({joinedChats:temp});
             }else{
-                console.log("there was an error, chat already exists");
+                console.log(response.data.error);
             }
         }catch(e){
             console.log(e);
