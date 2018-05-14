@@ -78,7 +78,8 @@ let exportedMethods = {
 				password: hashedPassword,
 				chats: [],
 				sessionId: null,
-				spotifyData: null
+				spotifyAuthenticationData: null,
+				spotifyId: null
             };
             let addedUser = await userCollection.insertOne(newUser);
             return this.getUserById(addedUser.insertedId);
@@ -125,15 +126,15 @@ let exportedMethods = {
         const userCollection = await users();
 		console.log(`adding spotify data to ${username}`);
 		let user = await userCollection.findOne({username:username});
-	
-		if(user.spotifyData){
+		if(user.spotifyAuthenticationData){
 			console.log("user has spotify Data or user could not be found");
-			return({error: userAlreadyHasSpotifyData});
+			return({error: "user already has spotify data"});
 		}else{
-			let userValidationData = await spotifyData.getUserAuthorization(code,redirectUri);
-			console.log(userValidationData);
-			if( userValidationData && userValidationData.access_token && userValidationData.refresh_token){
-				let user = await userCollection.updateOne({username:username},{$set: {spotifyData: userValidationData}});
+			let data = await spotifyData.getAllData(code,redirectUri);
+			console.log(data);
+			if(data.authenticationData && !data.authenticationData.error){
+				let user = await userCollection.updateOne({username:username},{$set: {spotifyAuthenticationData: data.authenticationData, spotifyId: data.spotifyId }});
+				console.log("sucess adding data");
 				return({success: "spotify data added succesfully"});
 			}else{
 				//console.log("spotify error " + userValidatonData.error);
@@ -141,6 +142,17 @@ let exportedMethods = {
 			}
 		}
 		
+	},
+	async savePlaylistFromChatToSpotify(username,chatId){
+		const userCollection = await users();
+		const chatCollection = await chats();
+		let user = await userCollection.findOne({usernmae:username});
+		let chat = await userCollection.findOne({_id:chatId});
+		let songs = [];
+		//TODO get list of songs
+		//TODO create spotify method addPlaylist(string spotifyId,object spotifyAuthentication info,string[] songUris, string playlistName)
+		//TODO remember all user data requests will return a refreshed token if it was needed
+		return	{success: "added playlist to spotify Account"};
 	},
     async removeUser(id) {
         const userCollection = await users();

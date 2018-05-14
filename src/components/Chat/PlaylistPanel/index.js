@@ -13,7 +13,9 @@ class PlaylistPanel extends Component {
 
         
   }
-
+  async savePlaylist(){
+		
+  }
   render() {
 	let songList = null;
 	let playlistPanel = null;
@@ -30,6 +32,7 @@ class PlaylistPanel extends Component {
 			<div className="songPanel">
 				<h1>current playlist</h1>
 				{songList}
+				<button onClick={this.savePlaylist}>Save Playlist</button>
 			</div>
 		)
 

@@ -27,7 +27,8 @@ async function getAuthorization(){
 			
 }
 let exportedMethods = {
-	async getUserAuthorization(code,redirectUri){
+		
+	async getAllData(code,redirectUri){
 		let response = null;
 		let axiosSettings = {
 			method: 'post',
@@ -38,15 +39,35 @@ let exportedMethods = {
 				redirect_uri: redirect_uri,
 			},
 			headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) }	
-			}
+		}
 		try{
 			response = await axios(axiosSettings);
-			//console.log("response from spotify " + response.data);
-			return response.data;
+			let spotifyUser= await this.getUserInformation(response.data.access_token);
+			return {authenticationData:response.data, spotifyId: spotifyUser.id};
 		}catch (e){
 			console.log("error in spotify request");
 			console.log(e);
 			return {error: e};
+		}
+	},
+	async getUserInformation(userToken){
+		//console.log(`the suer token is ${userToken} in get user information method`);
+		let spotifyId = null;
+		let response = null
+		let axiosSettings = {
+			method: 'get',
+			url: "https://api.spotify.com/v1/me",	
+			headers: {
+					"Authorization": "Bearer " + userToken
+			}	
+		}
+		try{
+			let response = await axios(axiosSettings);
+			//console.log(`response form user information ${JSON.stringify(response.data)}`);
+			return await response.data;
+		}catch(e){
+			console.log(e);
+			return {error:e};
 		}
 	},
 	async getSongsByKeyword(keyword){

@@ -123,10 +123,10 @@ class App extends Component {
 		this.setSessionCookie(users.data.sessionId);
 		this.setState({username: _username});	
 		this.setState({loggedIn: true});	
+		let fullUrl=url+"?" + queryString.stringify(spotifyClientParams);
+		console.log(fullUrl);
+		window.location.assign(fullUrl);
 	}
-	let fullUrl=url+"?" + queryString.stringify(spotifyClientParams);
-	console.log(fullUrl);
-	window.location.assign(fullUrl);
 		
   }
   logout(){
