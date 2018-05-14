@@ -1,6 +1,7 @@
 const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
 const chats = mongoCollections.chats;
+const spotifyData = require("./spotify");
 const uuid = require("node-uuid");
 const bcrypt = require("bcrypt");
 /* user is in the format
@@ -76,7 +77,8 @@ let exportedMethods = {
 				email: email,
 				password: hashedPassword,
 				chats: [],
-				sessionId: null
+				sessionId: null,
+				spotifyData: null
             };
             let addedUser = await userCollection.insertOne(newUser);
             return this.getUserById(addedUser.insertedId);
@@ -115,6 +117,31 @@ let exportedMethods = {
 			return {error: e};
 		}
     },
+	async addSpotifyData(username,code,redirectUri){
+		if(!username || !code || !redirectUri){
+			console.log("insufficent data to add spotify data");
+			return({error:"insufficient data was given to add spotify data"});
+		}
+        const userCollection = await users();
+		console.log(`adding spotify data to ${username}`);
+		let user = await userCollection.findOne({username:username});
+	
+		if(user.spotifyData){
+			console.log("user has spotify Data or user could not be found");
+			return({error: userAlreadyHasSpotifyData});
+		}else{
+			let userValidationData = await spotifyData.getUserAuthorization(code,redirectUri);
+			console.log(userValidationData);
+			if( userValidationData && userValidationData.access_token && userValidationData.refresh_token){
+				let user = await userCollection.updateOne({username:username},{$set: {spotifyData: userValidationData}});
+				return({success: "spotify data added succesfully"});
+			}else{
+				//console.log("spotify error " + userValidatonData.error);
+				return({error: "spotify error"});	
+			}
+		}
+		
+	},
     async removeUser(id) {
         const userCollection = await users();
         let response = await chatCollection.removeOne({_id:id})

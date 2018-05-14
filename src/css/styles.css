@@ -6031,6 +6031,43 @@ button {
   .userPanel h1 {
     text-align: center; }
 
+.songPanel {
+  position: fixed;
+  border: 4px solid #F3544F;
+  background-color: #D2E9F2;
+  top: 30%;
+  left: 35%;
+  width: 30%;
+  height: 60%;
+  z-index: 4;
+  overflow: scroll; }
+  .songPanel button {
+    width: 100%; }
+  .songPanel input {
+    width: 80%;
+    background: 0 0;
+    background-color: #F8F7F3;
+    border-radius: 2px;
+    border: 4px solid #D2E9F2;
+    color: #F3544F;
+    font-size: 2em; }
+    .songPanel input::placeholder {
+      color: #F3544F;
+      font-style: italic;
+      opacity: .8; }
+  .songPanel #searchButton {
+    width: 20%;
+    float: right; }
+  .songPanel #submitButton {
+    width: 20%;
+    float: right; }
+  .songPanel .artistName {
+    color: #605583; }
+  .songPanel .selected {
+    background-color: #A09696; }
+  .songPanel h1 {
+    text-align: center; }
+
 /*!
  * Bootstrap v4.0.0-beta.2 (https://getbootstrap.com)
  * Copyright 2011-2017 The Bootstrap Authors

@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 const uuid = require('uuid')
 class ChatsPanel extends Component {
-  constructor(props){
-        super(props);
-  };
   render() {
     let ChatList = null;
     if(this.props.joinedChats.length >0){
         ChatList = this.props.joinedChats.map( (chat) =>{
             if(chat != null){
+					//TODO make the chats named way better
                     return(<button
                             key={uuid.v4()}
                             value={chat._id}
                             onClick={e => {this.props.setActiveChat(e.target.value)}}>
-							//TODO make the chats named way better
                             {chat.users[1].username}
                             </button>);
            }

@@ -3,6 +3,10 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const uuid =require('uuid');
 const port = 8000;
+
+
+
+
 io.on('connection',(socket)=> {
     console.log('a user connected');
     socket.on('disconnect', () =>{
@@ -23,8 +27,8 @@ io.on('connection',(socket)=> {
     });
     socket.on('startChat', chat => {
        let chatId = uuid.v4()
-		console.log("starting chat with users" + chat.usernames);
-       chat.usernames.forEach( (user) => {
+		console.log("starting chat with users" + chat.users);
+       chat.users.forEach( (user) => {
           io.to(user).emit('subscribe',chat);
         });
     });

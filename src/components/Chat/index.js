@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Submit from "./Submit";
 import Log from "./Log";
 import NewChat from "./NewChat";
+import NewSong from "./NewSong";
 import Chats from "./Chats";
 import io from 'socket.io-client';
 const axios = require("axios");
@@ -13,7 +14,8 @@ class Chat extends Component {
         this.state = {
             socket: io.connect('http://localhost:8000'),
             joinedChats: [],
-			activeChat: null
+			activeChat: null,
+			selectedSong: null
         };
 
         this.updateMessages = this.updateMessages.bind(this);
@@ -21,6 +23,7 @@ class Chat extends Component {
         this.updateUsers = this.updateUsers.bind(this);
         this.addChat = this.addChat.bind(this);
         this.setActiveChat = this.setActiveChat.bind(this);
+        this.selectSong = this.selectSong.bind(this);
         
   }
   async componentDidMount(){
@@ -50,7 +53,13 @@ class Chat extends Component {
   }
     ///////////methods to send and update messages/////////////
    async sendMessage(message){
-        let data= {username:this.props.username,message:message,activeChat:this.state.joinedChats[this.state.activeChat]._id};
+		let song = this.state.joinedChats[this.state.activeChat].users.find(user => {return user.username===this.props.username}).song;
+		console.log(song);
+		if(!song.name){
+			console.log("error, no song name");
+			return;
+		}
+        let data= {username:this.props.username,message:message,activeChat:this.state.joinedChats[this.state.activeChat]._id,song:song.name};
         this.state.socket.emit('chatMessage',data);
         try{    
            await axios.post(`http://localhost:4000/chats/${data.activeChat}/message`,data);
@@ -82,21 +91,31 @@ class Chat extends Component {
   setActiveChat(id){
             console.log("setting active chat!");
             let index = 0;
+			let activeSong = null;
             for(let i=0;i<this.state.joinedChats.length;i++){
-                if(this.state.joinedChats[i] !== null && this.state.joinedChats[i]._id == id){
+                if(this.state.joinedChats[i] !== null && this.state.joinedChats[i]._id === id){
                     index = i;
+					break;
                 }
             }
+			
+            for(let i=0;i<this.state.joinedChats[index].users.length;i++){
+					if(this.state.joinedChats[index].users[i].username === this.props.username){
+						activeSong = this.state.joinedChats[index].users[i].song;
+						break;
+					}	
+			}
+			
             console.log("set active chat to " + index);              
             console.log("active chat is " + JSON.stringify(this.state.joinedChats[index]));
-            this.setState({activeChat:index});
+            this.setState({activeChat:index,activeSong:activeSong});
   }
     //helper method which checks for a chat by id, and returns its index in this.state.activeChats
   getChatIndex(id){
             console.log("setting active chat!");
             let index = 0;
             for(let i=0;i<this.state.joinedChats.length;i++){
-                if(this.state.joinedChats[i] !== null && this.state.joinedChats[i]._id == id){
+                if(this.state.joinedChats[i] !== null && this.state.joinedChats[i]._id === id){
                     index = i;
                 }
             }
@@ -119,13 +138,17 @@ class Chat extends Component {
             console.log(e);
         }
   }
+  selectSong(song){
+	this.setState({selectedSong:song});
+  }
+   
 
     //renders the chat 
   render() {
     let submit = null;
     let log= null;
-    if(this.state.activeChat != null && this.state.joinedChats[this.state.activeChat] != undefined){
-        log=<Log chatLog={this.state.joinedChats[this.state.activeChat].messages} roomTitle="chat" username={this.props.username}/>
+    if(this.state.activeChat !== null && this.state.joinedChats[this.state.activeChat] !== undefined){
+        log=<Log chat={this.state.joinedChats[this.state.activeChat]} roomTitle={`selected Song: ${this.state.activeSong.name}`} username={this.props.username} selectSong={this.selectSong} />
         submit= <Submit messages={this.state.messages} sendMessage={this.sendMessage}/>;
     }
     return (

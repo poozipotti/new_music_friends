@@ -35,21 +35,13 @@ let exportedMethods = {
 		}; 
 		const chatCollection = await chats();
 		const userCollection = await users();
-		usersFound = [];
-		try{
-			usersFound =await  userCollection.find({username : {$in : usernames}});
-			console.log(usersFound.toArray());
-		} catch (e){
-			console.log(e);
-		}
-		usersFound = usersFound.length;	
-		console.log(`found ${usersFound}/${newchat.usernames.length} users`);
-		if(usersFound != newchat.users.length){
-			throw "some users not found";
+		let usersFound = await userCollection.find({username: {$in :usernames}}).toArray();
+		if(usersFound.length !== usernames.length){
+			throw "Error: could not find all users!"
 			return;
-		}	
+		}
 		try{
-			for(let i=0;i<users.length;i++){
+			for(let i=0;i<usernames.length;i++){
 				try{
 					await userData.addChat(usernames[i],newchat._id);
 				}catch (e){
@@ -61,6 +53,9 @@ let exportedMethods = {
 			console.log(e);
 			return {error: e};
 		}
+		newchat.users = usernames.map( username => {
+			return {username:username,song:""};
+		});
 		let response = await chatCollection.insertOne(newchat);
 		return chatCollection.findOne({_id:newchat._id}); 
     },
@@ -91,7 +86,7 @@ let exportedMethods = {
         try{
             const chatCollection = await chats();
 			await userData.addChat(newchat.users[i].username,newchat._id);
-            let response = await chatCollection.updateOne({_id:id},{$push: {users: {username:username,song:"hey jude"} } });
+            let response = await chatCollection.updateOne({_id:id},{$push: {users: {username:username,song:null} } });
             return response; 
             
         } catch (e) {
@@ -99,6 +94,32 @@ let exportedMethods = {
             console.log(e);
         }
     },
+    async addSong(chatId,username,song){
+        try{
+            const chatCollection = await chats();
+            let response = await chatCollection.updateOne({_id:chatId,"users.username":username},{$set: {"users.$.song":song} });
+			let updatedChat = await chatCollection.findOne({_id:chatId});
+            return updatedChat; 
+        } catch (e) {
+            console.log("there was an error");
+            console.log(e);
+        }
+    },
+	async getSongs(chatId){
+		const chatCollection = await chats();
+		let chat = await chatCollection.findOne({ _id: id });
+		let response = {songs: []};
+		if(!chat){
+			throw "could not find chat with that id!"
+			return;
+		}
+		for(let i =0; i<chat.users.length; i++){
+			if(chat.users[i].song){
+				response.songs.push(chat.users[i].song);
+			}
+		}
+		return response;
+	},
     async removeChat(id) {
         const chatCollection = await chats();
         let response =null

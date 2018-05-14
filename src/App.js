@@ -4,7 +4,21 @@ import logo from './logo.png';
 import './css/styles.min.css';
 import Chat from "./components/Chat"; 
 import Login from "./components/Login"; 
-const axios = require('axios');
+url: "https://accounts.spotify.com/authorize";
+const queryString = require("querystring");
+const client_id = 'cd2283f2006447a6a780c711890fed3c'; // Your client id
+const redirect_uri = "http://localhost:3000";
+const axios = require("axios");
+
+
+
+const spotifyClientParams={
+				client_id: client_id,
+				response_type: "code",
+				redirect_uri: redirect_uri,
+				scope: "user-library-read playlist-modify-public user-top-read user-follow-read"
+};
+const url = "https://accounts.spotify.com/authorize/";
 class App extends Component {
   constructor(props){
 	super(props);
@@ -21,11 +35,12 @@ class App extends Component {
 	this.deleteSessionCookie = this.deleteSessionCookie.bind(this);
   }
   async componentDidMount(){
-		let sessionId = this.getSessionCookie(sessionId);	
+		let sessionId = this.getSessionCookie();	
 		let user = null;
+		let queries = queryString.parse((window.location.href.split("?").length == 2) ? window.location.href.split("?")[1] : "");
 		if(sessionId){
 			try{
-				user = await axios.get(`http://localhost:4000/users/login/`+encodeURI(sessionId));
+				user = await axios.get(`http://localhost:4000/users/verify/`+encodeURI(sessionId));
 				if(!user.data.error){
 					console.log("got user from session" + JSON.stringify(user.data));
 					this.setState({username:user.data.username,loggedIn:true});
@@ -35,6 +50,21 @@ class App extends Component {
 				console.log(e)
 			}
 		}	
+		if(queries.code){
+			//this means that the user has authenticated spotify
+			console.log("spotify permissions granted");
+			try{
+				await axios.post(`http://localhost:4000/users/verify/spotify`,{username:this.state.username,code:queries.code,redirectUri:redirect_uri});
+			}catch(e){
+				console.log(e);
+			}
+			window.location.assign(redirect_uri);
+			
+		}else{
+			//this means that something has gone wrong quthenticating spotify
+			console.log("spotify permissions denied");
+		}
+
   }
   getSessionCookie(){
     var name = "session=";
@@ -42,10 +72,10 @@ class App extends Component {
     var ca = decodedCookie.split(';');
     for(var i = 0; i <ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0) == ' ') {
+        while (c.charAt(0) === ' ') {
             c = c.substring(1);
         }
-        if (c.indexOf(name) == 0) {
+        if (c.indexOf(name) === 0) {
             return c.substring(name.length, c.length);
         }
     }
@@ -53,7 +83,7 @@ class App extends Component {
   setSessionCookie(sessionId){
 	let d = new Date();
 	let expireTime = 10; //in days
-    d.setTime(d.getTime() + (expires*24*60*60*1000));
+    d.setTime(d.getTime() + (expireTime*24*60*60*1000));
     var expires = "expires="+ d.toUTCString();
     document.cookie = "session=" + sessionId + ";" + expires + ";path=/;";
   }
@@ -75,8 +105,7 @@ class App extends Component {
 		console.log(e);
 	}
 	if(!users.data.error){
-		this.setState({username: _username});	
-		this.setState({loggedIn: true});	
+		this.login(_username,_password);
 	}
 		
   }
@@ -85,16 +114,19 @@ class App extends Component {
 	console.log(`${_username} logged in`);
 	let users= null
 	try{
-		users = await axios.post("http://localhost:4000/users/login",{username:_username,password: _password});
+		users = await axios.post("http://localhost:4000/users/verify",{username:_username,password: _password});
 		console.log(users.data);
 	}catch (e){
 		console.log(e);
 	}
-	if(users.data.verified == true){
+	if(users.data.verified === true){
 		this.setSessionCookie(users.data.sessionId);
 		this.setState({username: _username});	
 		this.setState({loggedIn: true});	
 	}
+	let fullUrl=url+"?" + queryString.stringify(spotifyClientParams);
+	console.log(fullUrl);
+	window.location.assign(fullUrl);
 		
   }
   logout(){

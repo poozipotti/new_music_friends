@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 	}
 	res.json(data);
 });
-router.post("/login",async (req, res) => {
+router.post("/verify",async (req, res) => {
 	let data = null;
 	let user = req.body;
 	try{
@@ -25,7 +25,18 @@ router.post("/login",async (req, res) => {
 	}
 	res.json(data);
 });
-router.get("/login/:sessionId",async (req, res) => {
+router.post("/verify/spotify",async (req, res) => {
+	let data = null;
+	let spotifyData = req.body;
+	try{
+		data = await userData.addSpotifyData(spotifyData.username,spotifyData.code,spotifyData.redirectUri); 
+	}catch (e){
+		console.log(e);
+		data = {error: e};
+	}
+	res.json(data);
+});
+router.get("/verify/:sessionId",async (req, res) => {
 	let data = null;
 	let user = req.body;
 	try{

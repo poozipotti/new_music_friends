@@ -95,3 +95,54 @@ button{
 		text-align: center;
 	}
 }
+.songPanel{
+	position:fixed;
+	border: 4px solid $main-brand;
+	background-color:$light-blue;
+	top:(100%-60%)/2+10%;
+	left:(100%-30%)/2;
+	width: 30%;
+	height: 60%;
+	z-index: 4;
+	overflow: scroll;
+	button{
+		width: 100%;
+	}
+	input{
+		width: 80%;
+		background: 0 0;
+		background-color: $light-primary;
+		border-radius: 2px;
+		border: 4px solid $light-blue;
+		color: $main-brand;
+		font-size: 2em;
+		&::placeholder{
+			color: $main-brand;
+			font-style:italic;
+			opacity: .8;	
+		}
+	}
+	#searchButton{
+		width:20%;
+		float:right;
+	}
+	#submitButton{
+		width:20%;
+		float:right;
+	}
+	.artistName{
+		color: $dark-primary;
+	}
+	.selected{
+		background-color: $dark-accent;
+	}
+	h1{
+		text-align: center;
+	}
+}
+.noteInput{
+	background-color: $main-brand;
+	width:100%;
+
+}
+
