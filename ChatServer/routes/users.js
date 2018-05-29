@@ -114,5 +114,16 @@ router.get("/:username/chats",async (req, res) => {
 	}
 	res.json(data);
 });
+//TODO decide if this should be a get or a post request for good practice
+router.get("/:username/chats/:chatId/savePlaylist",async (req, res) => {
+	let data = null;
+	try{
+		data = await userData.savePlaylistToSpotify(req.params.username,req.params.chatId);
+	}catch (e){
+		console.log(e);
+		data = {error: e};
+	}
+	res.json(data);
+});
 
 module.exports = router;

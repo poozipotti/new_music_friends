@@ -86,7 +86,7 @@ let exportedMethods = {
         try{
             const chatCollection = await chats();
 			await userData.addChat(newchat.users[i].username,newchat._id);
-            let response = await chatCollection.updateOne({_id:id},{$push: {users: {username:username,song:null} } });
+            let response = await chatCollection.updateOne({_id:id},{$push: {users: {username:username,song:null,uri:null} } });
             return response; 
             
         } catch (e) {

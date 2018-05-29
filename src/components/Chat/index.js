@@ -148,7 +148,7 @@ class Chat extends Component {
     let submit = null;
     let log= null;
     if(this.state.activeChat !== null && this.state.joinedChats[this.state.activeChat] !== undefined){
-        log=<Log chat={this.state.joinedChats[this.state.activeChat]} roomTitle={`selected Song: ${this.state.activeSong.name}`} username={this.props.username} selectSong={this.selectSong} />
+		log = <Log chat={this.state.joinedChats[this.state.activeChat]} roomTitle={`selected Song: ${this.state.activeSong.name}`} username={this.props.username} selectSong={this.selectSong} />
         submit= <Submit messages={this.state.messages} sendMessage={this.sendMessage}/>;
     }
     return (

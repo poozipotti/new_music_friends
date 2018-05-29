@@ -10,15 +10,24 @@ class PlaylistPanel extends Component {
         this.state = {
 			clicked : false,
         };
+        this.savePlaylist = this.savePlaylist.bind(this);
 
         
   }
   async savePlaylist(){
-		
+		let response = null;
+		try{
+			response = await axios.get(`http://localhost:4000/users/${this.props.username}/chats/${this.props.chat._id}/savePlaylist`);
+			console.log(response.data.data.uri);
+			this.setState({clicked:false, uri:response.data.data.uri});
+		}catch (e){
+			console.log(e);
+		}
   }
   render() {
 	let songList = null;
 	let playlistPanel = null;
+	let playlistButton = <button onClick={e => {this.setState({clicked : !this.state.clicked });}}>view playlist</button>;
 	if(this.state.clicked){
 		if(this.props.chat.users.length >1){
 			songList = this.props.chat.users.map( (user) =>{
@@ -40,7 +49,7 @@ class PlaylistPanel extends Component {
 	}
 	return (
 		<div>
-		<button onClick={e => {this.setState({clicked: !this.state.clicked });}}>view playlist</button>
+		{playlistButton}
 		{playlistPanel}
 		</div>
 	)

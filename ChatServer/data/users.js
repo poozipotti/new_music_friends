@@ -143,16 +143,22 @@ let exportedMethods = {
 		}
 		
 	},
-	async savePlaylistFromChatToSpotify(username,chatId){
+	async savePlaylistToSpotify(username,chatId){
 		const userCollection = await users();
 		const chatCollection = await chats();
-		let user = await userCollection.findOne({usernmae:username});
-		let chat = await userCollection.findOne({_id:chatId});
-		let songs = [];
-		//TODO get list of songs
-		//TODO create spotify method addPlaylist(string spotifyId,object spotifyAuthentication info,string[] songUris, string playlistName)
-		//TODO remember all user data requests will return a refreshed token if it was needed
-		return	{success: "added playlist to spotify Account"};
+		let user = await userCollection.findOne({username:username});
+		let chat = await chatCollection.findOne({_id:chatId});
+		let songs = chat.users.map((x) => {return x.song});
+		console.log(`songs are ${songs}`);
+		//TODO 	CHANGE THIS IS A TEST
+		try{
+			let data = await spotifyData.addPlaylistToUser(user.spotifyAuthenticationData,user.spotifyId,"this is a test",songs)
+            await chatCollection.updateOne({_id:chatId,"users.username":username},{$set: {"users.$.uri":data.uri} });
+			return	{data};
+		}catch (e){
+			console.log(e);
+			return {error: e};
+		}
 	},
     async removeUser(id) {
         const userCollection = await users();
