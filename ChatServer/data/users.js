@@ -143,20 +143,59 @@ let exportedMethods = {
 		}
 		
 	},
+	async refreshUserSpotifyData(username){
+		const userCollection = await users();
+		let user = await userCollection.findOne({username:username});
+		try{
+			let data = await spotifyData.refreshUserToken(user.spotifyAuthenticationData);
+			data.code = user.spotifyAuthenticationData.code;
+			data.refresh_token = user.spotifyAuthenticationData.refresh_token;
+			console.log(`\n\n\n data from refresh ${JSON.stringify(data)} \n\n`);
+			userCollection.updateOne({username:username},{$set:{spotifyAuthenticationData:data}});
+		}
+		catch(e){
+			console.log(e);
+			return e.data;
+		}
+	},
 	async savePlaylistToSpotify(username,chatId){
 		const userCollection = await users();
 		const chatCollection = await chats();
 		let user = await userCollection.findOne({username:username});
 		let chat = await chatCollection.findOne({_id:chatId});
 		let songs = chat.users.map((x) => {return x.song});
+		let data =null;
 		console.log(`songs are ${songs}`);
 		//TODO 	CHANGE THIS IS A TEST
 		try{
-			let data = await spotifyData.addPlaylistToUser(user.spotifyAuthenticationData,user.spotifyId,"this is a test",songs)
+			//this is kind of hard to understand it needs to be written more clearly
+			//the method will make a request if it gets a 401 it will refresh the token and then try again
+			let authorizationAttempts = 2; //this needs to at least be 2 to refresh the token
+			for(let i = 0; i<authorizationAttempts; i++){
+				try{
+					data = await spotifyData.addPlaylistToUser(user.spotifyAuthenticationData,user.spotifyId,"this is a test",songs)
+					console.log(data);
+				}catch (e){
+					console.log(e);
+				}
+				if(!data){
+					return ({error: "there was an error with the data"});
+				}
+				if(data.status == 401){
+					try{
+						await this.refreshUserSpotifyData(username);
+					}catch (e){
+						console.log(e);
+					}
+				}else{
+					break;
+				}
+			}
             await chatCollection.updateOne({_id:chatId,"users.username":username},{$set: {"users.$.uri":data.uri} });
 			return	{data};
 		}catch (e){
 			console.log(e);
+			//console.log("401401401");
 			return {error: e};
 		}
 	},

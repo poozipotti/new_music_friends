@@ -65,11 +65,12 @@ let exportedMethods = {
 			}	
 		}
 		try{
-			let response = await axios(axiosSettings);
-			//console.log(`response form user information ${JSON.stringify(response.data)}`);
+			response = await axios(axiosSettings);
+
+			console.log(`\n\n\n\n ${response.stauts} \n\n\n\n\n`);
 			return await response.data;
 		}catch(e){
-			console.log(e);
+			console.log(`\n\n\n\n ${response.stauts} \n\n\n\n\n`);
 			return {error:e};
 		}
 	},
@@ -93,8 +94,7 @@ let exportedMethods = {
 			response = await axios(axiosSettings);
 			playlistId = response.data.id;
 		}catch(e){
-			console.log(e);
-			return {error:e};
+			return {error:e,status:e.response.status};
 		}
 		axiosSettings = {
 			method: 'post',
@@ -111,7 +111,7 @@ let exportedMethods = {
 			return response.data;
 		}catch(e){
 			console.log(e);
-			return {error:e};
+			return e.data;
 		}
 
 	},
@@ -143,6 +143,26 @@ let exportedMethods = {
 			return response.data;
 		}else{
 			console.log("please get the authorization token! no authorization found");
+		}
+	},
+	async refreshUserToken(userAuthenticationData){
+		let refresh_token = userAuthenticationData.refresh_token;
+		let axiosSettings = {
+			method: 'post',
+			url: "https://accounts.spotify.com/api/token",	
+			params:{
+				grant_type: "refresh_token",
+				refresh_token: refresh_token,
+			},
+			headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) }	
+		}
+		try{
+			let response = await axios(axiosSettings);
+			return response.data;
+		}catch (e){
+			console.log("error in spotify refresh request");
+			console.log(e);
+			return {error: e};
 		}
 	}
 }
