@@ -17,6 +17,11 @@ io.on('connection',(socket)=> {
         console.log("received message");
         console.log(message);
     });
+    socket.on('songMessage', song => {
+        io.to(song.chatId).emit('songMessage',song);
+        console.log(`received new song change sending to ${song.chatId}`);
+		
+    });
     socket.on('login', username => {
 		console.log(`${username} logged in`);
         socket.join(username);
@@ -26,10 +31,10 @@ io.on('connection',(socket)=> {
         socket.join(channelId);
     });
     socket.on('startChat', chat => {
-       let chatId = uuid.v4()
-		console.log("starting chat with users" + chat.users);
+		console.log(`trying to start a chat with ${chat.users}`);
        chat.users.forEach( (user) => {
-          io.to(user).emit('subscribe',chat);
+		  console.log(user.username);
+          io.to(user.username).emit('subscribe',chat);
         });
     });
 });

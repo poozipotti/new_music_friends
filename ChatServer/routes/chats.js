@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
 //add new song
 router.post("/:chatId/song/", async (req, res) => {
     let song = req.body;
-    console.log("tried to put a song in chat " + req.params.chatId );
+    //console.log("tried to put a song in chat " + req.params.chatId );
     if (!song)  {
         res.status(400).json({ error: "You must provide song data to create a chat" });
         return;
@@ -61,7 +61,7 @@ router.post("/:chatId/song/", async (req, res) => {
 	}
     try{
         let newChat =await chatData.addSong(req.params.chatId,song.username,song);
-        console.log("new message added! " + JSON.stringify(song));
+        //console.log("new song added! " + JSON.stringify(song));
         res.json(newChat);
     }catch(e){
         console.log(e);

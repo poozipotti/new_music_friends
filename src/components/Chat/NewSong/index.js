@@ -13,7 +13,6 @@ class NewSong extends Component {
         };
         this.changeSearchText = this.changeSearchText.bind(this);
         this.selectSong = this.selectSong.bind(this);
-        this.submitSong = this.submitSong.bind(this);
         this.deactivate = this.deactivate.bind(this);
   };
   async search(){
@@ -32,20 +31,9 @@ class NewSong extends Component {
 	 console.log(index);
 	 this.setState({selectedSong:index});
   }
-  async submitSong(){
-	let submitSong = this.state.songList[this.state.selectedSong];
-	submitSong.username  = this.props.username;
-	try{
-		let response = await axios.post(`http://localhost:4000/chats/${this.props.chat._id}/song/`,submitSong)	
-		console.log(response);
-		this.deactivate();
-	}catch (e){
-		console.log(e)
-	}
-  }
   deactivate(){
 	this.setState({clicked:false,selectedSong:null,songList:[],searchText:""});
- }
+  }
   render() {
 	let songPanel = null;
 	let songDisplayList = [];
@@ -84,7 +72,7 @@ class NewSong extends Component {
 				</input>
 				<button type="submit" id="searchButton">Search</button>
 			</form>
-				<button onClick= {e => {this.props.selectSong(this.state.selectedSong);this.submitSong()}}id="submitButton" >done</button>
+				<button onClick= {e => {this.props.submitSong(this.state.songList[this.state.selectedSong]);this.deactivate()}}id="submitButton" >done</button>
 				{songDisplayList}
 			</div>);
 

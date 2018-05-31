@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-const axios = require("axios");
 const uuid = require("node-uuid");
+const axios = require("axios");
 
 
 
@@ -18,8 +18,7 @@ class PlaylistPanel extends Component {
 		let response = null;
 		try{
 			response = await axios.get(`http://localhost:4000/users/${this.props.username}/chats/${this.props.chat._id}/savePlaylist`);
-			console.log(response.data.data.uri);
-			this.setState({clicked:false, uri:response.data.data.uri});
+			this.setState({clicked:false});
 		}catch (e){
 			console.log(e);
 		}
@@ -27,7 +26,7 @@ class PlaylistPanel extends Component {
   render() {
 	let songList = null;
 	let playlistPanel = null;
-	let playlistButton = <button onClick={e => {this.setState({clicked : !this.state.clicked });}}>view playlist</button>;
+	let playlistButton = <button onClick={e => {this.setState({clicked : !this.state.clicked })}}>view playlist</button>;
 	if(this.state.clicked){
 		if(this.props.chat.users.length >1){
 			songList = this.props.chat.users.map( (user) =>{

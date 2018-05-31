@@ -20,7 +20,9 @@ class Chat extends Component {
 
         this.updateMessages = this.updateMessages.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
+		this.submitSong = this.submitSong.bind(this);
         this.updateUsers = this.updateUsers.bind(this);
+        this.updateJoinedChats = this.updateJoinedChats.bind(this);
         this.addChat = this.addChat.bind(this);
         this.setActiveChat = this.setActiveChat.bind(this);
         this.selectSong = this.selectSong.bind(this);
@@ -45,9 +47,14 @@ class Chat extends Component {
         this.state.socket.on("chatMessage", (message) => {
             this.updateMessages(message);
         });
+        this.state.socket.on("songMessage", (song) => {
+			console.log("received song message \\\n\n\n\n\n\n\n");
+            this.updateSongs(song);
+        });
         //join a specific chat 
         this.state.socket.on("subscribe", chat => {
-            this.setActiveChat(chat._id);
+			console.log("got subscription request!");
+			this.updateJoinedChats(chat);
             this.state.socket.emit("subscribe",chat._id);
         });
   }
@@ -68,7 +75,33 @@ class Chat extends Component {
             console.log(e);
         }
   }
+  async submitSong(song){
+	song.username  = this.props.username;
+	song.activeChat = this.state.activeChat;
+	let chatId = this.state.joinedChats[this.state.activeChat]._id;
+	song.activeChat = this.state.activeChat;
+	song.chatId = chatId;
+	this.state.socket.emit("songMessage",song);
+	this.setState({activeSong:song});
+	try{
+		let response = await axios.post(`http://localhost:4000/chats/${chatId}/song/`,song)	
+	   	//console.log(response);	
+	}catch (e){
+		console.log(e)
+	}
+  }
+  async updateSongs(song){
 
+	console.log(`trying to update with song ${song.name}`);
+    let temp=this.state.joinedChats;
+	console.log(`chatIndex = ${song.activeChat}`);
+	
+	let userIndex = temp[song.activeChat].users.findIndex(x => {return  x.username==song.username});
+	console.log(`song usrname is recorded as ${song.username}`);
+	console.log(`userIndex = ${userIndex} username= ${temp[song.activeChat].users[userIndex].username}`);
+	temp[song.activeChat].users[userIndex].song = song;
+    this.setState({joinedChats:temp});
+  }
   async updateMessages(message){
     let temp=this.state.joinedChats;
     let chatIndex = this.getChatIndex(message.activeChat);
@@ -80,6 +113,11 @@ class Chat extends Component {
 
     this.setState({joinedChats:temp});
   }
+  async updateJoinedChats(chat){
+    let temp=this.state.joinedChats;
+    temp.push(chat);;
+    this.setState({joinedChats:temp});
+  }
    /// methods to update the users that have logged in////
   updateUsers(uid){
     if(this.state.users.includes(uid)){
@@ -88,6 +126,7 @@ class Chat extends Component {
     let temp=this.state.users.concat([uid]);
     this.setState({users:temp});
   }
+  //also update the chat from the database
   setActiveChat(id){
             console.log("setting active chat!");
             let index = 0;
@@ -148,7 +187,7 @@ class Chat extends Component {
     let submit = null;
     let log= null;
     if(this.state.activeChat !== null && this.state.joinedChats[this.state.activeChat] !== undefined){
-		log = <Log chat={this.state.joinedChats[this.state.activeChat]} roomTitle={`selected Song: ${this.state.activeSong.name}`} username={this.props.username} selectSong={this.selectSong} />
+		log = <Log chat={this.state.joinedChats[this.state.activeChat]} roomTitle={`selected Song: ${this.state.activeSong.name}`} username={this.props.username} selectSong={this.selectSong} submitSong={this.submitSong}/>
         submit= <Submit messages={this.state.messages} sendMessage={this.sendMessage}/>;
     }
     return (
