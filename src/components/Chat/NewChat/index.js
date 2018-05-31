@@ -9,7 +9,8 @@ class Chat extends Component {
         super(props);
         this.state = {
 			clicked : false,
-			users: []
+			users: [],
+			selectedUsers: []
         };
 
         
@@ -26,37 +27,35 @@ class Chat extends Component {
 	}
 	
   }
-  async addChat(chat){
-        //format
-        //{id,users,chatLog}
-        try{    
-            let response = axios.post('http://localhost:4000/chat',chat);
-            if(!response.data.error){
-                console.log("adding chat: " + JSON.stringify(chat));
-                let temp = this.state.joinedChats;
-                temp = temp.concat([chat]);
-                console.log(`added chat ${chat._id} in the object ${JSON.stringify(temp)}`);
-                this.setState({joinedChats:temp});
-            }else{
-                console.log("there was an error, chat already exists");
-            }
-        }catch(e){
-            console.log(e);
-        }
+  selectUser(username){
+	let temp = this.state.selectedUsers;
+	let index = temp.findIndex((x) => {x == username});
+	if(index != -1){
+		temp[index] = "";
+	}else{
+		temp.push(username);
+	}
+	this.setState({selectedUsers:temp});
   }
-
     //renders the chat 
   render() {
 	let userList = null;
 	let userPanel = null;
+	let selected = "";
 	if(this.state.clicked){
 		if(this.state.users.length >1){
 			userList = this.state.users.map( (user) =>{
 					if(this.props.username !== user.username){
+						if(this.state.selectedUsers.includes(user.username)){
+							selected = "selected"
+						}else{
+							selected = null;
+						}
 						return(<button
 								key={uuid.v4()}
 								value={user.username}
-								onClick={e =>{this.setState({clicked:false});this.props.addChat([this.props.username,e.target.value])}}
+								onClick={e =>{this.selectUser(e.target.value)}}
+								className = {selected}
 								>
 									{user.username}
 
@@ -68,6 +67,7 @@ class Chat extends Component {
 			<div className="userPanel">
 				<h1>start chat</h1>
 				{userList}
+				<button> done </button>
 			</div>
 		)
 

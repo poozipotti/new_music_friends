@@ -78,6 +78,12 @@ button{
 		background-color: $main-brand;
 		color: $light-primary;
 	}
+	.selected{
+		background-color: $dark-accent;
+	}
+}
+.selected{
+	background-color: $dark-accent;
 }
 .userPanel{
 	position:fixed;

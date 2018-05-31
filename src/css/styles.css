@@ -6016,6 +6016,11 @@ button {
   button:hover {
     background-color: #F3544F;
     color: #F8F7F3; }
+  button .selected {
+    background-color: #A09696; }
+
+.selected {
+  background-color: #A09696; }
 
 .userPanel {
   position: fixed;
@@ -6067,6 +6072,10 @@ button {
     background-color: #A09696; }
   .songPanel h1 {
     text-align: center; }
+
+.noteInput {
+  background-color: #F3544F;
+  width: 100%; }
 
 /*!
  * Bootstrap v4.0.0-beta.2 (https://getbootstrap.com)
