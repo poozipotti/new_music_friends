@@ -146,8 +146,13 @@ let exportedMethods = {
 	async refreshUserSpotifyData(username){
 		const userCollection = await users();
 		let user = await userCollection.findOne({username:username});
+		let data = null;
 		try{
-			let data = await spotifyData.refreshUserToken(user.spotifyAuthenticationData);
+			try{
+				data = await spotifyData.refreshUserToken(user.spotifyAuthenticationData);
+			}catch(e){
+				console.log(e)
+			}
 			data.code = user.spotifyAuthenticationData.code;
 			data.refresh_token = user.spotifyAuthenticationData.refresh_token;
 			console.log(`\n\n\n data from refresh ${JSON.stringify(data)} \n\n`);
@@ -191,7 +196,11 @@ let exportedMethods = {
 					break;
 				}
 			}
-            await chatCollection.updateOne({_id:chatId,"users.username":username},{$set: {"users.$.uri":data.uri} });
+			try{
+				await chatCollection.updateOne({_id:chatId,"users.username":username},{$set: {"users.$.uri":data.uri} });
+			}catch(e){
+				console.log(e);
+			}
 			return	{data};
 		}catch (e){
 			console.log(e);

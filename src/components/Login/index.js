@@ -5,7 +5,8 @@ class Chat extends Component {
         super(props);
         this.state = {
 			usernameText: "",
-			passwordText: ""
+			passwordText: "",
+			attemptedLogin: false
         };
 
         
@@ -19,11 +20,12 @@ class Chat extends Component {
     this.setState({passwordText});
   };
   render() {
+	let errorMessage = this.state.attemptedLogin ? "login failed" : null;
 	return(
 		<div className="row loginContainer justify-content-center">
 			<div id="loginBox" className="col-3">
 				<h1 className="text-center text-light" style={{ margin: 30 }}>Login</h1>
-				<form onSubmit= { e => {e.preventDefault();this.props.login(this.state.usernameText,this.state.passwordText)}}>
+				<form onSubmit= { e => {e.preventDefault();this.props.login(this.state.usernameText,this.state.passwordText);this.setState({attemptedLogin:true})}}>
 					<input type="text" placeholder="username" 
 						   value={this.state.usernameText} 
 						   onChange={e => {
@@ -38,6 +40,7 @@ class Chat extends Component {
 								this.changePasswordText(e.target.value)
 							}}>
 					</input>
+					{errorMessage}
 					<button type="submit" style={{margin: 10}}>Login</button>
 				</form>
 					<button style={{margin: 10}} onClick={e => {this.props.signup(this.state.usernameText,this.state.passwordText)}}>Signup</button>
