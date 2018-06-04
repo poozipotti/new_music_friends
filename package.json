@@ -23,7 +23,7 @@
     "socket.io": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"node ChatServer/chatServer.js\" \"node ChatServer/api.js\" \"react-scripts start\"",
     "dev": "concurrently  \"react-scripts start\" \"gulp \" ",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
