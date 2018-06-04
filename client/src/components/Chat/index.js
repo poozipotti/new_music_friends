@@ -4,13 +4,13 @@ import NewChat from "./NewChat";
 import Chats from "./Chats";
 import io from 'socket.io-client';
 const axios = require("axios");
-
+const socketUri = "http://localhost:8000";
 
 class Chat extends Component {
   constructor(props){
         super(props);
         this.state = {
-            socket: io.connect('http://localhost:8000'),
+            socket: io.connect(socketUri),
             joinedChats: [],
 			activeChat: null,
 			selectedSong: null
@@ -29,7 +29,7 @@ class Chat extends Component {
   async componentDidMount(){
 		let allChats = null;
         try{
-            allChats = await axios.get(`http://localhost:4000/users/${this.props.username}/chats`);
+            allChats = await axios.get(`/users/${this.props.username}/chats`);
             this.setState({joinedChats:allChats.data});
 			for(let i=0;i<allChats.data.length;i++){
 				this.state.socket.emit("subscribe",allChats.data[i]._id);
@@ -67,7 +67,7 @@ class Chat extends Component {
         let data= {username:this.props.username,message:message,activeChat:this.state.joinedChats[this.state.activeChat]._id,song:song.name};
         this.state.socket.emit('chatMessage',data);
         try{    
-           await axios.post(`http://localhost:4000/chats/${data.activeChat}/message`,data);
+           await axios.post(`/chats/${data.activeChat}/message`,data);
         }catch(e){
             console.log("error posting message to db" + e);
             console.log(e);
@@ -82,7 +82,7 @@ class Chat extends Component {
 	this.state.socket.emit("songMessage",song);
 	this.setState({activeSong:song});
 	try{
-		let response = await axios.post(`http://localhost:4000/chats/${chatId}/song/`,song)	
+		let response = await axios.post(`/chats/${chatId}/song/`,song)	
 	   	//console.log(response);	
 	}catch (e){
 		console.log(e)
@@ -162,7 +162,7 @@ class Chat extends Component {
         //format
         //{id,users,chatLog}
         try{    
-            let response = await axios.post('http://localhost:4000/chats',{usernames:usernames, chatName:chatName});
+            let response = await axios.post('/chats',{usernames:usernames, chatName:chatName});
             if(!response.data.error){
 				this.state.socket.emit("startChat",response.data);
                 let temp = this.state.joinedChats;

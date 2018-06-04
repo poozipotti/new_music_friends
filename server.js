@@ -6,9 +6,10 @@ const bodyParser = require("body-parser");
 const app = express();
 
 const configRoutes = require("./routes");
-const port = 4000;
+const port = 8000;
+const path = require("path");
 
-
+app.use(express.static(path.join(__dirname,"client","build")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 //middlewear to allow access to the api from our localhost
@@ -30,7 +31,12 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
+
 configRoutes(app);
+
+app.get("*", (req,res) => {
+	res.sendFile(path.join(__dirname,"client","build","index.html"));
+});
 app.listen(port, () => {
             console.log("connected to api sever listening on http://localhost:"+port);
 

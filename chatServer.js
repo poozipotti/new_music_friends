@@ -2,7 +2,7 @@ const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const uuid =require('uuid');
-const port = 8000;
+const port = 8080;
 
 
 
@@ -38,6 +38,6 @@ io.on('connection',(socket)=> {
         });
     });
 });
-http.listen(port,()=>{
+http.listen(port()=>{
     console.log('listening on port ' + port);
 })

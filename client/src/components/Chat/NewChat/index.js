@@ -20,7 +20,7 @@ class Chat extends Component {
   async componentDidMount(){
 	let response = null
 	try{
-		response = await axios.get("http://localhost:4000/users/");
+		response = await axios.get("/users/");
 	}catch (e){
 		console.log(e);
 	}

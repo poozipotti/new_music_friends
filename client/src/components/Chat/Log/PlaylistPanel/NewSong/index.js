@@ -17,7 +17,7 @@ class NewSong extends Component {
   };
   async search(){
 		try{
-			let response = await axios({method:"get",url:"http://localhost:4000/spotify/songs",params:{q:this.state.searchText}});
+			let response = await axios({method:"get",url:"/spotify/songs",params:{q:this.state.searchText}});
 			this.setState({songList: response.data.tracks.items});	
 		}catch (e){
 			console.log(e);

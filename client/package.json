@@ -17,15 +17,18 @@
     "gulp-sass": "^4.0.1",
     "mongodb": "^3.0.6",
     "node-uuid": "^1.4.8",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-scripts": "1.1.4",
     "socket.io": "^2.1.0"
   },
   "scripts": {
-    "start": "concurrently \"node chatServer.js\" \"node server.js\" ",
+    "start": "concurrently \"node ChatServer/chatServer.js\" \"node ChatServer/api.js\" \"react-scripts start\"",
     "dev": "concurrently  \"react-scripts start\" \"gulp \" ",
-	"heroku-postbuild": "cd client && npm install --only=dev && yarn install && yarn run build"
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
-  "engines": {
-		"node":"8.11.2"
-  }
-
+  "proxy" : "http://localhost:8000"
+	
 }

@@ -18,7 +18,7 @@ class PlaylistPanel extends Component {
   async savePlaylist(){
 		let response = null;
 		try{
-			response = await axios.get(`http://localhost:4000/users/${this.props.username}/chats/${this.props.chat._id}/savePlaylist`);
+			response = await axios.get(`/users/${this.props.username}/chats/${this.props.chat._id}/savePlaylist`);
 			this.setState({clicked:false});
 		}catch (e){
 			console.log(e);

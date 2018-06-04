@@ -40,7 +40,7 @@ class App extends Component {
 		let queries = queryString.parse((window.location.href.split("?").length == 2) ? window.location.href.split("?")[1] : "");
 		if(sessionId){
 			try{
-				user = await axios.get(`http://localhost:4000/users/verify/`+encodeURI(sessionId));
+				user = await axios.get(`/users/verify/`+encodeURI(sessionId));
 				if(!user.data.error){
 					console.log("got user from session" + JSON.stringify(user.data));
 					this.setState({username:user.data.username,loggedIn:true});
@@ -54,7 +54,7 @@ class App extends Component {
 			//this means that the user has authenticated spotify
 			console.log("spotify permissions granted");
 			try{
-				await axios.post(`http://localhost:4000/users/verify/spotify`,{username:this.state.username,code:queries.code,redirectUri:redirect_uri});
+				await axios.post(`/users/verify/spotify`,{username:this.state.username,code:queries.code,redirectUri:redirect_uri});
 			}catch(e){
 				console.log(e);
 			}
@@ -99,7 +99,7 @@ class App extends Component {
 	console.log(`${_username} signed up`);
 	let users= null
 	try{
-		users = await axios.post("http://localhost:4000/users/",{username:_username,password: _password});
+		users = await axios.post("/users/",{username:_username,password: _password});
 		console.log(users.data);
 	}catch (e){
 		console.log(e);
@@ -114,7 +114,7 @@ class App extends Component {
 	console.log(`${_username} logged in`);
 	let users= null
 	try{
-		users = await axios.post("http://localhost:4000/users/verify",{username:_username,password: _password});
+		users = await axios.post("/users/verify",{username:_username,password: _password});
 		console.log(users.data);
 	}catch (e){
 		console.log(e);
