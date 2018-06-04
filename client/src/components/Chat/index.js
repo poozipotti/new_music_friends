@@ -4,13 +4,17 @@ import NewChat from "./NewChat";
 import Chats from "./Chats";
 import io from 'socket.io-client';
 const axios = require("axios");
+
 const socketUri = process.env.PORT || "http://localhost:4000";
+
 console.log("connectiong to socket at " + socketUri);
+
 class Chat extends Component {
+
   constructor(props){
         super(props);
         this.state = {
-            socket: io.connect(sockertUri),
+            socket: io.connect(socketUri),
             joinedChats: [],
 			activeChat: null,
 			selectedSong: null
