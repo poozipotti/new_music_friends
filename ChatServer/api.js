@@ -8,6 +8,7 @@ const app = express();
 const configRoutes = require("./routes");
 const port = 4000;
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 //middlewear to allow access to the api from our localhost
@@ -30,7 +31,7 @@ app.use(function (req, res, next) {
     next();
 });
 configRoutes(app);
-app.listen(port, () => {
+app.listen(port || process.env.PORT, () => {
             console.log("connected to api sever listening on http://localhost:"+port);
 
 });
