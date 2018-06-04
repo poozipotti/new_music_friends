@@ -67,6 +67,9 @@ io.on('connection',(socket)=> {
 
 configRoutes(app);
 
+app.get("*", (req,res) => {
+	res.sendFile(path.join(__dirname,"client","build","index.html"));
+});
 app.listen(port, () => {
             console.log("connected to api sever listening on http://localhost:"+port);
 

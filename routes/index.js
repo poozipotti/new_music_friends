@@ -6,9 +6,6 @@ const constructorMethod = (app) => {
     app.use("/users", userRoutes);
     app.use("/spotify", spotifyRoutes);
     app.use("/chats", chatRoutes);
-	app.get("*", (req,res) => {
-		res.sendFile(path.join(__dirname,"client","build","index.html"));
-	});
 };
 
 module.exports = constructorMethod;
