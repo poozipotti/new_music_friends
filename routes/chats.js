@@ -23,7 +23,6 @@ router.post("/:chatId/message", async (req, res) => {
     }
     try{
         let newChat =await chatData.addMessage(req.params.chatId,message);
-        console.log("new message added! " + JSON.stringify(newChat));
         res.json(newChat);
     }catch(e){
         console.log(e);

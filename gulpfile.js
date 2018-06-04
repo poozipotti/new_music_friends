@@ -19,13 +19,14 @@ const vendorJsFiles = [
   "./node_modules/popper.js/dist/umd/popper.min.js",
   "./node_modules/bootstrap/dist/js/bootstrap.min.js"
 ];
+
 var chatProcess,chatApiProcess;
 gulp.task("chatServer", () => {
 	if (chatProcess){
 	 log("restarting chat socket server changes made");
 	 chatProcess.kill()
 	}
-	chatProcess = spawn('node',['chatServer.js'],{stdio: 'inherit'});
+	chatProcess = spawn('node',['./chatServer.js'],{stdio: 'inherit'});
 	chatProcess.on('close', (code) => {
 		if(code === 8){
 			log("error in chat sockets server, waiting for update");
