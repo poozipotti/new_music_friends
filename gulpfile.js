@@ -25,7 +25,7 @@ gulp.task("chatServer", () => {
 	 log("restarting chat socket server changes made");
 	 chatProcess.kill()
 	}
-	chatProcess = spawn('node',['ChatServer/chatServer.js'],{stdio: 'inherit'});
+	chatProcess = spawn('node',['chatServer.js'],{stdio: 'inherit'});
 	chatProcess.on('close', (code) => {
 		if(code === 8){
 			log("error in chat sockets server, waiting for update");
@@ -37,7 +37,7 @@ gulp.task("chatApiServer", () => {
 	 log("restarting chat api socket server changes made");
 	 chatApiProcess.kill()
 	}
-	chatApiProcess = spawn('node',['ChatServer/api.js'],{stdio: 'inherit'});
+	chatApiProcess = spawn('node',['server.js'],{stdio: 'inherit'});
 	chatApiProcess.on('close', (code) => {
 		if(code === 8){
 			log("error in chat api server, waiting for update");
@@ -45,8 +45,8 @@ gulp.task("chatApiServer", () => {
 	});
 })
 gulp.task('startServers',['chatServer','chatApiServer'], () => {
-	gulp.watch(["./ChatServer/chatServer.js"],["chatServer"]);		
-	gulp.watch(["./ChatServer/api.js","./ChatServer/**/*.js"],["chatApiServer"]);		
+	gulp.watch(["./chatServer.js"],["chatServer"]);		
+	gulp.watch(["./server.js","./**/*.js"],["chatApiServer"]);		
 });
 gulp.task("sass", () => {
   gulp
