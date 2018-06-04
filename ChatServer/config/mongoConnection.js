@@ -1,12 +1,11 @@
 "use strict"
 const MongoClient = require("mongodb").MongoClient;
-const herokuMongo = 'mongodb://heroku_wcrk0q1l:dcvendbmcf8emrgfdrt66014cf@ds247690.mlab.com:47690/heroku_wcrk0q1l";
 const localPort = "mongodb://localhost:27017/";
 
 
 const settings = {
     mongoConfig: {
-        serverUrl: herokuMongo,
+        serverUrl: process.env.MONGODB_URI || localPort,
         database: "chatdb"
     }
 };

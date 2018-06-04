@@ -31,7 +31,7 @@ app.use(function (req, res, next) {
     next();
 });
 configRoutes(app);
-app.listen(port || process.env.PORT, () => {
+app.listen(process.env.PORT || port, () => {
             console.log("connected to api sever listening on http://localhost:"+port);
 
 });
