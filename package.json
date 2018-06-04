@@ -20,7 +20,7 @@
     "socket.io": "^2.1.0"
   },
   "scripts": {
-    "start": "concurrently \"node chatServer.js\" \"node server.js\" ",
+    "start": "node server.js ",
     "dev": "concurrently  \"react-scripts start\" \"gulp \" ",
 	"heroku-postbuild": "cd client && npm install --only=dev && yarn install && yarn run build"
   },
