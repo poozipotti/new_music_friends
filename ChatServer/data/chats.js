@@ -9,6 +9,7 @@ const userData = require("./users");
 		_id: uuid,
 		usernames: usernames in the chat(list),
 		messages: messages in the chat(list) 
+		chatName: name of the chat
 	}
 */
 let exportedMethods = {
@@ -27,12 +28,17 @@ let exportedMethods = {
             console.log(e);
         }
     },
-    async addChat(usernames){
+    async addChat(usernames,chatName){
         let newchat = {
 			_id: uuid.v4(),
 			users: [],
-			messages: []
+			messages: [],
+			chatName: chatName
 		}; 
+		if(!chatName){
+			console.log("no chat name provided!")
+			return {error: "no chat name provided"};
+		}
 		const chatCollection = await chats();
 		const userCollection = await users();
 		let usersFound = await userCollection.find({username: {$in :usernames}}).toArray();

@@ -10,7 +10,9 @@ class Chat extends Component {
         this.state = {
 			clicked : false,
 			users: [],
-			selectedUsers: []
+			selectedUsers: [],
+			submittedUsers: false,
+			chatName:""
         };
 
         
@@ -26,6 +28,12 @@ class Chat extends Component {
 		this.setState({users:response.data.users});	
 	}
 	
+  }
+  changechatNameText(chatNameText){
+    this.setState({chatName:chatNameText});
+  }
+  deactivate(){
+		this.setState({clicked:false,selectedUsers:[]});
   }
   selectUser(username){
 	let temp = this.state.selectedUsers;
@@ -43,7 +51,24 @@ class Chat extends Component {
 	let userPanel = null;
 	let selected = "";
 	if(this.state.clicked){
-		if(this.state.users.length >1){
+		if(this.state.submittedUsers){
+			userPanel = 
+			(
+				<div className="userPanel">
+				<form onSubmit= { e => {e.preventDefault();this.props.addChat(this.state.selectedUsers.concat([this.props.username]),this.state.chatName);this.deactivate();}}>
+					<input type="text" placeholder="chat name!" 
+						   value={this.state.searchText} 
+						   onChange={e => {
+								e.preventDefault();
+								this.changechatNameText(e.target.value)
+							}}>
+					</input>
+					<button type="submit" id="searchButton">done</button>
+				</form>
+				</div>
+			)
+		}
+		else if(this.state.users.length >=1){
 			userList = this.state.users.map( (user) =>{
 					if(this.props.username !== user.username){
 						if(this.state.selectedUsers.includes(user.username)){
@@ -62,14 +87,15 @@ class Chat extends Component {
 								</button>);
 					}
 			});
-		}
 		userPanel = (
 			<div className="userPanel">
+				<button onClick= {e => {this.deactivate()}}>X</button>
 				<h1>start chat</h1>
 				{userList}
-				<button> done </button>
+				<button onClick={e => {this.setState({submittedUsers:true})}}> done </button>
 			</div>
 		)
+	   }
 
 		
 	}

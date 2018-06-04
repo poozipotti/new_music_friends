@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import Submit from "./Submit";
 import Log from "./Log";
 import NewChat from "./NewChat";
-import NewSong from "./NewSong";
 import Chats from "./Chats";
 import io from 'socket.io-client';
 const axios = require("axios");
@@ -160,11 +158,11 @@ class Chat extends Component {
             }
             return index;
   }
-  async addChat(usernames){
+  async addChat(usernames,chatName){
         //format
         //{id,users,chatLog}
         try{    
-            let response = await axios.post('http://localhost:4000/chats',{usernames:usernames});
+            let response = await axios.post('http://localhost:4000/chats',{usernames:usernames, chatName:chatName});
             if(!response.data.error){
 				this.state.socket.emit("startChat",response.data);
                 let temp = this.state.joinedChats;
@@ -182,13 +180,12 @@ class Chat extends Component {
   }
    
 
-    //renders the chat 
+    //renders the chat
   render() {
     let submit = null;
     let log= null;
     if(this.state.activeChat !== null && this.state.joinedChats[this.state.activeChat] !== undefined){
-		log = <Log chat={this.state.joinedChats[this.state.activeChat]} roomTitle={`selected Song: ${this.state.activeSong.name}`} username={this.props.username} selectSong={this.selectSong} submitSong={this.submitSong}/>
-        submit= <Submit messages={this.state.messages} sendMessage={this.sendMessage}/>;
+		log = <Log chat={this.state.joinedChats[this.state.activeChat]} roomTitle={`selected Song: ${this.state.activeSong.name}`} username={this.props.username} submitSong={this.submitSong} messages={this.state.messages} sendMessage={this.sendMessage}/>
     }
     return (
         <div className="chatBox row">

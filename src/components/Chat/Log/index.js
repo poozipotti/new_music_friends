@@ -1,48 +1,81 @@
 import React, { Component } from 'react';
-import NewSong from "../NewSong";
 import PlaylistPanel from "./PlaylistPanel";
+import Submit from "./Submit";
 const uuid = require('uuid')
 class Log extends Component {
 
   constructor(props){
         super(props);
         this.state = {
-			didAddSong: false
+			didAddSong: false,
         };
+        this.checkComplete = this.checkComplete.bind(this);
 
   }
-  render() {
-		let myUser = this.props.chat.users.find(x => {return  x.username==this.props.username});
-       let chatList = this.props.chat.messages.map(message => 
-        {
-             if(message.username === this.props.username){
-                return(<div className="message own-message" key={uuid.v4()}>
-                    <p>{message.song}</p>
-                    <p>{message.message}</p>
-                </div>)
-            }else{
-                return(<div  className="message other-message" key={uuid.v4()}>
-                    <p>{message.song}</p>
-                    <p>{message.message}</p>
-                </div>)
-            }
-        });
-		let buttons = <PlaylistPanel chat={this.props.chat} username={this.props.username}/>;
-		if(!myUser.song){
-			buttons = 
-				<div>
-					<NewSong username={this.props.username} chat={this.props.chat} selectSong={this.props.selectSong} submitSong={this.props.submitSong}/>
-					<PlaylistPanel chat={this.props.chat} username={this.props.username}/>
-				</div>
+  checkComplete(){
+	let songs= this.props.chat.users.filter(user => {return user.song.name != undefined});
+	if(songs.length == this.props.chat.users.length){
+		return true;
+	}else{
+		return false;
+	}
+  }  
+  scrollToBottom(){
+		let element = document.getElementById("logBox");
+		if(element){
+			element.scrollTop = element.scrollHeight - element.clientHeight;
 		}
-	 	else if(myUser.uri ){
+  }
+  componentDidUpdate(){
+		let element = document.getElementById("logBox");
+		if(element){
+			element.scrollTop = element.scrollHeight - element.clientHeight;
+		}
+  }
+  render() {
+		let complete = this.checkComplete();
+		let myUser = this.props.chat.users.find(x => {return  x.username==this.props.username});
+		let chatList = null;
+		let submitButton = null;
+		if(complete){
+			chatList = this.props.chat.messages.map(message => 
+			{
+				 if(message.username === this.props.username){
+					return(<div className="message own-message" key={uuid.v4()}>
+						<p>{message.song}</p>
+						<p>{message.message}</p>
+						</div>)
+				}else{
+					return(<div  className="message other-message" key={uuid.v4()}>
+						<p>{message.song}</p>
+						<p>{message.message}</p>
+						</div>)
+				}
+			});
+			submitButton = <Submit messages={this.props.messages} sendMessage={this.props.sendMessage}/>;
+		}
+		let buttons = <PlaylistPanel chat={this.props.chat} username={this.props.username} complete={complete} submitSong={this.props.submitSong}/>;
+	 	if(myUser.uri ){
 			 buttons = <iframe src={"https://open.spotify.com/embed?uri=" + myUser.uri + "&view=coverart"} width="322" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>;
 		}
     return (
-        <div id="logBox">
+        <div>
         <h1>{this.props.roomTitle}</h1>
-		{buttons}
-        {chatList}
+		<div className="row">
+			<div className="col-12">
+				{buttons}
+			</div>
+		</div>
+		<div className="row">
+			<div className="col-12" id="logBox">
+				{chatList}
+			</div>
+		</div>
+		<div className="row">
+			<div className="col-12">
+				{submitButton}
+			</div>
+		</div>
         </div>
     );
   };

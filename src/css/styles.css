@@ -44,8 +44,8 @@
 
 #logBox {
   width: 100%;
-  min-height: 650px;
-  height: 650px;
+  min-height: 450px;
+  height: 450px;
   overflow: auto; }
   #logBox .message p {
     width: 100%; }
@@ -6036,6 +6036,19 @@ button {
   .userPanel h1 {
     text-align: center; }
 
+input {
+  width: 80%;
+  background: 0 0;
+  background-color: #F8F7F3;
+  border-radius: 2px;
+  border: 4px solid #D2E9F2;
+  color: #F3544F;
+  font-size: 2em; }
+  input::placeholder {
+    color: #F3544F;
+    font-style: italic;
+    opacity: .8; }
+
 .songPanel {
   position: fixed;
   border: 4px solid #F3544F;
@@ -6076,6 +6089,76 @@ button {
 .noteInput {
   background-color: #F3544F;
   width: 100%; }
+
+.chatBox {
+  min-height: 80vh; }
+
+#userBox {
+  background: #FDFDFD;
+  min-height: 100%;
+  margin-right: 0;
+  border-right: solid #F3544F 5px; }
+  #userBox button {
+    background: none;
+    width: 100%;
+    border: none;
+    padding-top: 15px;
+    padding-bottom: 15px; }
+  #userBox button:hover {
+    background: rgba(0, 0, 0, 0.1); }
+  #userBox h1 {
+    color: #605583;
+    width: 100%;
+    margin-bottom: 10px;
+    padding-top: 30px; }
+
+#submitBox {
+  width: 100%; }
+  #submitBox input {
+    border-right: none;
+    border-left: none;
+    boder-bottom: none;
+    border-top: 2px solid black;
+    width: 90%;
+    margin-left: 0;
+    height: 50px;
+    padding: none; }
+  #submitBox button {
+    width: 10%;
+    height: 50px;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+    border-top: 2px solid black;
+    background: #f5f5f5;
+    padding: none; }
+
+#logBox {
+  width: 100%;
+  min-height: 450px;
+  height: 450px;
+  overflow: auto; }
+  #logBox .message p {
+    width: 100%; }
+  #logBox .own-message {
+    background-color: #D2E9F2;
+    border: 3px solid #D2E9F2;
+    color: #605583;
+    border-radius: 4px;
+    width: 40%;
+    padding-left: 15px;
+    margin-top: 20px; }
+  #logBox .other-message {
+    text-align: left;
+    background-color: #605583;
+    border: 3px solid #605583;
+    color: #D2E9F2;
+    border-radius: 4px;
+    width: 40%;
+    margin-left: 60%;
+    margin: 10;
+    padding-left: 15px;
+    margin-top: 20px; }
 
 /*!
  * Bootstrap v4.0.0-beta.2 (https://getbootstrap.com)

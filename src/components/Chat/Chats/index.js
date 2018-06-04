@@ -6,12 +6,11 @@ class ChatsPanel extends Component {
     if(this.props.joinedChats.length >0){
         ChatList = this.props.joinedChats.map( (chat) =>{
             if(chat != null){
-					//TODO make the chats named way better
                     return(<button
                             key={uuid.v4()}
                             value={chat._id}
                             onClick={e => {this.props.setActiveChat(e.target.value)}}>
-                            {chat.users[1].username}
+                            {chat.chatName}
                             </button>);
            }
         });

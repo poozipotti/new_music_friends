@@ -33,14 +33,12 @@ router.post("/:chatId/message", async (req, res) => {
 //add a new chat
 router.post("/", async (req, res) => {
     let chat = req.body;
-    if (!chat || !chat.usernames) {
+    if (!chat || !chat.usernames || !chat.chatName) {
         res.status(400).json({ error: "You must provide chat data to create a chat" });
         return;
     }
-	let usernames = chat.usernames;
-	console.log("usernames are" + usernames);
     try{
-        let newChat =await chatData.addChat(usernames);
+        let newChat =await chatData.addChat(chat.usernames,chat.chatName);
         res.status(200).json(newChat);
     }catch(e){
         console.log(e);

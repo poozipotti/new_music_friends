@@ -101,6 +101,20 @@ button{
 		text-align: center;
 	}
 }
+input{
+	width: 80%;
+	background: 0 0;
+	background-color: $light-primary;
+	border-radius: 2px;
+	border: 4px solid $light-blue;
+	color: $main-brand;
+	font-size: 2em;
+	&::placeholder{
+		color: $main-brand;
+		font-style:italic;
+		opacity: .8;	
+	}
+}
 .songPanel{
 	position:fixed;
 	border: 4px solid $main-brand;

@@ -10,6 +10,7 @@ const log = require("fancy-log");
 const sassFiles = [
   "./src/styles/variables.scss",
   "./src/styles/custom.scss",
+  "./src/styles/chat.scss",
   "./src/styles/bootstrap/scss/bootstrap.scss"
 ];
 
