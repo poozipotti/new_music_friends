@@ -3,7 +3,7 @@ const MongoClient = require("mongodb").MongoClient;
 const localPort = "mongodb://localhost:27017/" ;
 let dbName = "chatdb" 
 if(process.env.MONGODB_URI){
- dbName = process.env.MONGODB_URI.slice.substring(process.env.MONGODB_URI.lastIndexOf("/")+1,pocess.env.MONGODB_URI.length-1);
+ dbName = process.env.MONGODB_URI.slice.substring(process.env.MONGODB_URI.lastIndexOf("/")+1,process.env.MONGODB_URI.length-1);
 }
 console.log("database name is" +  dbName);
 
