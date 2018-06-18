@@ -22,7 +22,7 @@
   "scripts": {
     "start": "node server.js ",
     "dev": "concurrently  \"react-scripts start\" \"gulp \" ",
-	"heroku-postbuild": "cd client && npm install --only=dev && yarn install && yarn run build"
+	"heroku-postbuild": "cd client && yarn install --only=dev && yarn install && yarn run build"
   },
   "engines": {
 		"node":"8.11.2"

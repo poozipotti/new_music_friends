@@ -1,11 +1,7 @@
 //this is a change to see if it works
 const express = require("express");
-
 const bodyParser = require("body-parser");
-
 const app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
 const configRoutes = require("./routes");
 const port = 4000;
 const path = require("path");
@@ -32,6 +28,19 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
+
+configRoutes(app);
+
+app.get("*", (req,res) => {
+	res.sendFile(path.join(__dirname,"client","build","index.html"));
+});
+const server = app.listen(port, () => {
+            console.log("connected to api sever listening on http://localhost:"+port);
+
+});
+
+const http = require('http').Server(app);
+const io = require('socket.io').listen(server);
 
 io.on('connection',(socket)=> {
     console.log('a user connected');
@@ -63,14 +72,4 @@ io.on('connection',(socket)=> {
           io.to(user.username).emit('subscribe',chat);
         });
     });
-});
-
-configRoutes(app);
-
-app.get("*", (req,res) => {
-	res.sendFile(path.join(__dirname,"client","build","index.html"));
-});
-app.listen(port, () => {
-            console.log("connected to api sever listening on http://localhost:"+port);
-
 });
