@@ -178,7 +178,7 @@ let exportedMethods = {
 			let authorizationAttempts = 2; //this needs to at least be 2 to refresh the token
 			for(let i = 0; i<authorizationAttempts; i++){
 				try{
-					data = await spotifyData.addPlaylistToUser(user.spotifyAuthenticationData,user.spotifyId,"this is a test",songs)
+					data = await spotifyData.addPlaylistToUser(user.spotifyAuthenticationData,user.spotifyId,chat.chatName,songs)
 					console.log(data);
 				}catch (e){
 					console.log(e);

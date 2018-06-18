@@ -7,7 +7,7 @@ import Login from "./components/Login";
 url: "https://accounts.spotify.com/authorize";
 const queryString = require("querystring");
 const client_id = 'cd2283f2006447a6a780c711890fed3c'; // Your client id
-const redirect_uri = "http://localhost:4000";
+const redirect_uri = "http://localhost:4000" || window.location.href;
 const axios = require("axios");
 
 
@@ -58,7 +58,7 @@ class App extends Component {
 			}catch(e){
 				console.log(e);
 			}
-			//window.location.assign(redirect_uri);
+			window.location.assign(redirect_uri);
 			
 		}else{
 			//this means that something has gone wrong quthenticating spotify
@@ -125,7 +125,7 @@ class App extends Component {
 		this.setState({loggedIn: true});	
 		let fullUrl=url+"?" + queryString.stringify(spotifyClientParams);
 		console.log(fullUrl);
-		//window.location.assign(fullUrl);
+		window.location.assign(fullUrl);
 	}
 		
   }
