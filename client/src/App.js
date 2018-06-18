@@ -7,7 +7,7 @@ import Login from "./components/Login";
 url: "https://accounts.spotify.com/authorize";
 const queryString = require("querystring");
 const client_id = 'cd2283f2006447a6a780c711890fed3c'; // Your client id
-const redirect_uri = "http://localhost:4000" || window.location.href;
+let redirect_uri = null;
 const axios = require("axios");
 
 
@@ -27,6 +27,7 @@ class App extends Component {
 		username: null
     };
 	//don't forget to bind methods JSX is a total weirdo
+	redirect_uri = window.location.href;
 	this.login = this.login.bind(this);
 	this.logout = this.logout.bind(this);
 	this.signup = this.signup.bind(this);
