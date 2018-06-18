@@ -7,7 +7,7 @@ import Login from "./components/Login";
 url: "https://accounts.spotify.com/authorize";
 const queryString = require("querystring");
 const client_id = 'cd2283f2006447a6a780c711890fed3c'; // Your client id
-let redirect_uri = null;
+let redirect_uri = "http://localhost:4000" || process.env.APP_URL;
 const axios = require("axios");
 
 
@@ -27,7 +27,6 @@ class App extends Component {
 		username: null
     };
 	//don't forget to bind methods JSX is a total weirdo
-	redirect_uri = window.location.href;
 	this.login = this.login.bind(this);
 	this.logout = this.logout.bind(this);
 	this.signup = this.signup.bind(this);
@@ -36,6 +35,8 @@ class App extends Component {
 	this.deleteSessionCookie = this.deleteSessionCookie.bind(this);
   }
   async componentDidMount(){
+		redirect_uri = window.location.href;
+		console.log(`\n\n\n\nREDIRECT URI IS ${redirerct_uri}`);
 		let sessionId = this.getSessionCookie();	
 		let user = null;
 		let queries = queryString.parse((window.location.href.split("?").length == 2) ? window.location.href.split("?")[1] : "");

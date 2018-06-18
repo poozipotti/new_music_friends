@@ -1,7 +1,7 @@
 const axios = require("axios");
 const client_id = 'cd2283f2006447a6a780c711890fed3c'; // Your client id
 const client_secret = '35836c5ed83f4232b1866fb665374f26'; // Your secret
-const redirect_uri = "http://localhost:3000";
+const redirect_uri = "http://localhost:3000" || preocess.env.APP_URL;
 const queryString = require("querystring");
 let authorizationToken = null;
 let baseUrl = "https://api.spotify.com" 
