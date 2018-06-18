@@ -1,7 +1,7 @@
 "use strict"
 const MongoClient = require("mongodb").MongoClient;
 const localPort = "mongodb://localhost:27017/" ;
-const dbName = "chatdb" | process.env.MONGODB_URI.slice.substring(process.env.MONGODB_URI.lastIndexOf("/"),pocess.env.MONGODB_URI.length-1);
+const dbName = "chatdb" || process.env.MONGODB_URI.slice.substring(process.env.MONGODB_URI.lastIndexOf("/")+1,pocess.env.MONGODB_URI.length-1);
 console.log(dbName);
 
 const settings = {
