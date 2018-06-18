@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const configRoutes = require("./routes");
-const port = 4000;
+const port = process.env.PORT || 4000;
 const path = require("path");
 
 app.use(express.static(path.join(__dirname,"client","build")));
