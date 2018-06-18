@@ -35,7 +35,7 @@ class App extends Component {
 	this.deleteSessionCookie = this.deleteSessionCookie.bind(this);
   }
   async componentDidMount(){
-		console.log(`\n\n\n\nREDIRECT URI IS ${redirerct_uri}`);
+		console.log(`\n\n\n\nREDIRECT URI IS ${redirect_uri}`);
 		let sessionId = this.getSessionCookie();	
 		let user = null;
 		let queries = queryString.parse((window.location.href.split("?").length == 2) ? window.location.href.split("?")[1] : "");
