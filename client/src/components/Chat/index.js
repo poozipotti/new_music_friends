@@ -5,7 +5,7 @@ import Chats from "./Chats";
 import io from 'socket.io-client';
 const axios = require("axios");
 
-const socketUri = process.env.PORT || "http://localhost:4000";
+const socketUri =  "http://localhost:4000" || process.env.PORT;
 
 console.log("connectiong to socket at " + socketUri);
 
