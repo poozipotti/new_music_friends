@@ -7,7 +7,7 @@ import Login from "./components/Login";
 url: "https://accounts.spotify.com/authorize";
 const queryString = require("querystring");
 const client_id = 'cd2283f2006447a6a780c711890fed3c'; // Your client id
-let redirect_uri = "http://localhost:4000" || process.env.APP_URL;
+const redirect_uri = "http://localhost:4000" || process.env.APP_URL;
 const axios = require("axios");
 
 
@@ -35,7 +35,6 @@ class App extends Component {
 	this.deleteSessionCookie = this.deleteSessionCookie.bind(this);
   }
   async componentDidMount(){
-		redirect_uri = window.location.href;
 		console.log(`\n\n\n\nREDIRECT URI IS ${redirerct_uri}`);
 		let sessionId = this.getSessionCookie();	
 		let user = null;
