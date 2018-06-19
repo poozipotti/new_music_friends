@@ -35,8 +35,7 @@ class App extends Component {
   }
   async componentDidMount(){
 		redirect_uri = window.location.href;
-		console.log(`\n\n\n\nREDIRECT URI IS ${redirect_uri}`);
-		let sessionId = this.getSessionCookie();	
+		ontent is cached for offline use.
 		let user = null;
 		let queries = queryString.parse((window.location.href.split("?").length == 2) ? window.location.href.split("?")[1] : "");
 		if(sessionId){
