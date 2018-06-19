@@ -25,6 +25,7 @@ class App extends Component {
 		username: null
     };
 	//don't forget to bind methods JSX is a total weirdo
+	redirect_uri = window.location.href;
 	this.login = this.login.bind(this);
 	this.logout = this.logout.bind(this);
 	this.signup = this.signup.bind(this);
@@ -54,6 +55,7 @@ class App extends Component {
 			//this means that the user has authenticated spotify
 			console.log("spotify permissions granted");
 			try{
+				
 				await axios.post(`/users/verify/spotify`,{username:this.state.username,code:queries.code,redirectUri:redirect_uri});
 			}catch(e){
 				console.log(e);

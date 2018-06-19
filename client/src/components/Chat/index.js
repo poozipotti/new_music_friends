@@ -5,7 +5,7 @@ import Chats from "./Chats";
 import io from 'socket.io-client';
 const axios = require("axios");
 
-const socketUri =  "http://localhost:4000" || process.env.PORT;
+const socketUri =  null;
 
 console.log("connectiong to socket at " + socketUri);
 
@@ -19,7 +19,7 @@ class Chat extends Component {
 			activeChat: null,
 			selectedSong: null
         };
-
+		socketUri = window.location.href;
         this.updateMessages = this.updateMessages.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
 		this.submitSong = this.submitSong.bind(this);
@@ -31,6 +31,7 @@ class Chat extends Component {
         
   }
   async componentDidMount(){
+		socketUri = window.location.href;
 		let allChats = null;
         try{
             allChats = await axios.get(`/users/${this.props.username}/chats`);
