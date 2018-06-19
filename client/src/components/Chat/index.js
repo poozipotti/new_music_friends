@@ -5,7 +5,7 @@ import Chats from "./Chats";
 import io from 'socket.io-client';
 const axios = require("axios");
 
-const socketUri =  null;
+let socketUri =  null;
 
 console.log("connectiong to socket at " + socketUri);
 
