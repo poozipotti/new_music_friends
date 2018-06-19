@@ -1,7 +1,7 @@
 const axios = require("axios");
 const client_id = 'cd2283f2006447a6a780c711890fed3c'; // Your client id
 const client_secret = '35836c5ed83f4232b1866fb665374f26'; // Your secret
-const redirect_uri = "http://localhost:3000" || process.env.APP_URL;
+const redirect_uri = "http://localhost:$000" || process.env.APP_URL;
 const queryString = require("querystring");
 let authorizationToken = null;
 let baseUrl = "https://api.spotify.com" 
@@ -31,6 +31,7 @@ async function getAuthorization(){
 }
 let exportedMethods = {
 	async getAllData(code,redirectUri){
+		console.log("\n\n\n\n\nredirect uri is : " + redirectUri);
 		let response = null;
 		let axiosSettings = {
 			method: 'post',
@@ -38,7 +39,7 @@ let exportedMethods = {
 			params:{
 				grant_type: "authorization_code",
 				code: code,
-				redirect_uri: redirect_uri,
+				redirect_uri: redirectUri,
 			},
 			headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) }	
 		}

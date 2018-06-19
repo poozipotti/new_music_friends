@@ -35,7 +35,6 @@ class App extends Component {
   }
   async componentDidMount(){
 		redirect_uri = window.location.href;
-		ontent is cached for offline use.
 		let user = null;
 		let queries = queryString.parse((window.location.href.split("?").length == 2) ? window.location.href.split("?")[1] : "");
 		if(sessionId){
@@ -44,6 +43,8 @@ class App extends Component {
 				if(!user.data.error){
 					console.log("got user from session" + JSON.stringify(user.data));
 					this.setState({username:user.data.username,loggedIn:true});
+				}else{
+					console.log(user.data.error);
 				}
 			}catch(e){
 				console.log("ERROR getting chats");
@@ -54,7 +55,9 @@ class App extends Component {
 			//this means that the user has authenticated spotify
 			console.log("spotify permissions granted");
 			try{
-				
+				if(!redirect_uri){
+					console.log("no redirect uri!");
+				}
 				await axios.post(`/users/verify/spotify`,{username:this.state.username,code:queries.code,redirectUri:redirect_uri});
 			}catch(e){
 				console.log(e);
@@ -63,7 +66,7 @@ class App extends Component {
 			
 		}else{
 			//this means that something has gone wrong quthenticating spotify
-			console.log("spotify permissions denied");
+			console.log("no spotify data");
 		}
 
   }
