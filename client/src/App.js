@@ -24,7 +24,6 @@ class App extends Component {
 		username: null
     };
 	//don't forget to bind methods JSX is a total weirdo
-	spotifyClientParams.redirect_uri = window.location.href;
 	this.login = this.login.bind(this);
 	this.logout = this.logout.bind(this);
 	this.signup = this.signup.bind(this);
@@ -33,11 +32,12 @@ class App extends Component {
 	this.deleteSessionCookie = this.deleteSessionCookie.bind(this);
   }
   async componentDidMount(){
-		spotifyClientParams.redirect_uri = window.location.href;
-		console.log("this is my url " + spotifyClientParams.redirect_uri);
 		let sessionId = this.getSessionCookie();
 		let user = null;
 		let queries = queryString.parse((window.location.href.split("?").length == 2) ? window.location.href.split("?")[1] : "");
+		if(!queries.code){ //we dont want to update the code from spotify into the redirect
+			spotifyClientParams.redirect_uri = window.location.href;
+		}
 		if(sessionId){
 			try{
 				user = await axios.get(`/users/verify/`+encodeURI(sessionId));
@@ -59,7 +59,7 @@ class App extends Component {
 					}catch(e){
 						console.log(e);
 					}
-					window.location.assign(spotifyClientParams.redirect_uri.substring(0,spotifyClientParams.redirect_uri.indexOf("?")));
+					window.location.assign(spotifyClientParams.redirect_uri);
 				}catch(e){
 					console.log(e);
 				}
