@@ -34,6 +34,7 @@ class App extends Component {
   }
   async componentDidMount(){
 		spotifyClientParams.redirect_uri = window.location.href;
+		console.log("this is my url " + spotifyClientParams.redirect_uri);
 		let sessionId = this.getSessionCookie();
 		let user = null;
 		let queries = queryString.parse((window.location.href.split("?").length == 2) ? window.location.href.split("?")[1] : "");
