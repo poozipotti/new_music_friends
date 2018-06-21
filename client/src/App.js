@@ -130,7 +130,7 @@ class App extends Component {
 		this.setState({loggedIn: true});	
 		let fullUrl=url+"?" + queryString.stringify(spotifyClientParams);
 		console.log(fullUrl);
-		//window.location.assign(fullUrl);
+		window.location.assign(fullUrl);
 	}
 		
   }
