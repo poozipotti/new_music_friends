@@ -39,7 +39,7 @@ let exportedMethods = {
 			params:{
 				grant_type: "authorization_code",
 				code: code,
-				redirect_uri: redirect_uri,
+				redirect_uri: redirectUri,
 			},
 			headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) }	
 		}
