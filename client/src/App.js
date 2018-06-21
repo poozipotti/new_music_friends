@@ -7,13 +7,12 @@ import Login from "./components/Login";
 url: "https://accounts.spotify.com/authorize";
 const queryString = require("querystring");
 const client_id = 'cd2283f2006447a6a780c711890fed3c'; // Your client id
-let redirect_uri = null;
 const axios = require("axios");
 
 const spotifyClientParams={
 				client_id: client_id,
 				response_type: "code",
-				redirect_uri: redirect_uri,
+				redirect_uri: null,
 				scope: "user-library-read playlist-modify-public user-top-read user-follow-read"
 };
 const url = "https://accounts.spotify.com/authorize/";
@@ -25,7 +24,7 @@ class App extends Component {
 		username: null
     };
 	//don't forget to bind methods JSX is a total weirdo
-	redirect_uri = window.location.href;
+	spotifyClientParams.redirect_uri = window.location.href;
 	this.login = this.login.bind(this);
 	this.logout = this.logout.bind(this);
 	this.signup = this.signup.bind(this);
@@ -34,7 +33,7 @@ class App extends Component {
 	this.deleteSessionCookie = this.deleteSessionCookie.bind(this);
   }
   async componentDidMount(){
-		redirect_uri = window.location.href;
+		spotifyClientParams.redirect_uri = window.location.href;
 		let sessionId = this.getSessionCookie();
 		let user = null;
 		let queries = queryString.parse((window.location.href.split("?").length == 2) ? window.location.href.split("?")[1] : "");
@@ -56,14 +55,14 @@ class App extends Component {
 			//this means that the user has authenticated spotify
 			console.log("spotify permissions granted");
 			try{
-				if(!redirect_uri){
+				if(!spotifyClientParams.redirect_uri){
 					console.log("no redirect uri!");
 				}
-				await axios.post(`/users/verify/spotify`,{username:this.state.username,code:queries.code,redirectUri:redirect_uri});
+				await axios.post(`/users/verify/spotify`,{username:this.state.username,code:queries.code,redirectUri:spotifyClientParams.redirect_uri});
 			}catch(e){
 				console.log(e);
 			}
-			window.location.assign(redirect_uri);
+			window.location.assign(spotifyClientParams.redirect_uri);
 			
 		}else{
 			//this means that something has gone wrong quthenticating spotify
