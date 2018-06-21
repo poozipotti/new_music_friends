@@ -35,6 +35,7 @@ class App extends Component {
   }
   async componentDidMount(){
 		redirect_uri = window.location.href;
+		let sessionId = this.getSessionCookie();
 		let user = null;
 		let queries = queryString.parse((window.location.href.split("?").length == 2) ? window.location.href.split("?")[1] : "");
 		if(sessionId){
