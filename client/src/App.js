@@ -9,7 +9,7 @@ const queryString = require("querystring");
 const client_id = 'cd2283f2006447a6a780c711890fed3c'; // Your client id
 const axios = require("axios");
 
-const spotifyClientParams={
+let spotifyClientParams={
 				client_id: client_id,
 				response_type: "code",
 				redirect_uri: null,
