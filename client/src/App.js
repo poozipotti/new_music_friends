@@ -63,7 +63,7 @@ class App extends Component {
 			}catch(e){
 				console.log(e);
 			}
-			window.location.assign(spotifyClientParams.redirect_uri);
+			//window.location.assign(spotifyClientParams.redirect_uri);
 			
 		}else{
 			//this means that something has gone wrong quthenticating spotify
@@ -130,7 +130,7 @@ class App extends Component {
 		this.setState({loggedIn: true});	
 		let fullUrl=url+"?" + queryString.stringify(spotifyClientParams);
 		console.log(fullUrl);
-		window.location.assign(fullUrl);
+		//window.location.assign(fullUrl);
 	}
 		
   }
