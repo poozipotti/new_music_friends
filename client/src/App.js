@@ -52,10 +52,10 @@ class App extends Component {
 								console.log("no redirect uri!");
 							}
 							await axios.post(`/users/verify/spotify`,{username:this.state.username,code:queries.code,redirectUri:spotifyClientParams.redirect_uri});
+							//window.location.assign(spotifyClientParams.redirect_uri);
 						}catch(e){
 							console.log(e);
 						}
-						window.location.assign(spotifyClientParams.redirect_uri);
 						
 					}else{
 						//this means that something has gone wrong quthenticating spotify
@@ -65,7 +65,7 @@ class App extends Component {
 					console.log(user.data.error);
 				}
 			}catch(e){
-				console.log("ERROR getting chats");
+				console.log("ERROR logging in from session chats");
 				console.log(e)
 			}
 		}	
