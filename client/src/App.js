@@ -44,26 +44,30 @@ class App extends Component {
 				if(!user.data.error){
 					console.log("got user from session" + JSON.stringify(user.data));
 					this.setState({username:user.data.username,loggedIn:true});
-					if(queries.code && !user.data.spotifyAuthenticationData){
-						//this means that the user has authenticated spotify
-						console.log("spotify permissions granted");
-						try{
-							if(!spotifyClientParams.redirect_uri){
-								console.log("no redirect uri!");
-							}
-							await axios.post(`/users/verify/spotify`,{username:this.state.username,code:queries.code,redirectUri:spotifyClientParams.redirect_uri});
-							//window.location.assign(spotifyClientParams.redirect_uri);
-						}catch(e){
-							console.log(e);
-						}
-						
-					}else{
-						//this means that something has gone wrong quthenticating spotify
-						console.log("no spotify data");
-					}
 				}else{
 					console.log(user.data.error);
 				}
+			if(queries.code){
+				//this means that the user has authenticated spotify
+				console.log("spotify permissions granted");
+				try{
+					if(!spotifyClientParams.redirect_uri){
+						console.log("no redirect uri!");
+					}
+					try{
+						let spotifyResponse = await axios.post(`/users/verify/spotify`,{username:this.state.username,code:queries.code,redirectUri:spotifyClientParams.redirect_uri});
+					}catch(e){
+						console.log(e);
+					}
+					window.location.assign(spotifyClientParams.redirect_uri);
+				}catch(e){
+					console.log(e);
+				}
+				
+			}else{
+				//this means that something has gone wrong quthenticating spotify
+				console.log("no spotify data");
+			}
 			}catch(e){
 				console.log("ERROR logging in from session chats");
 				console.log(e)
