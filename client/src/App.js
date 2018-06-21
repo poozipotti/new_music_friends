@@ -36,8 +36,9 @@ class App extends Component {
 		let user = null;
 		let queries = queryString.parse((window.location.href.split("?").length == 2) ? window.location.href.split("?")[1] : "");
 		spotifyClientParams.redirect_uri = window.location.href;
+		//this is so the queries dont get included in the redirect uri which messes up the whole spotify identification.
 		if(spotifyClientParams.redirect_uri.indexOf("?") > 0){
-			spotifyClientParams.redirect_uri = spotifyClientParams.redirect_uri.substring(0,(spotifyClientParams.redirect_uri.indexOf("?")-1));
+			spotifyClientParams.redirect_uri = spotifyClientParams.redirect_uri.substring(0,(spotifyClientParams.redirect_uri.indexOf("?")));
 		}
 		console.log("\n\n\nspotifyClientParams.redirect_uri:" + spotifyClientParams.redirect_uri)
 		if(sessionId){
