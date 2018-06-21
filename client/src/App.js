@@ -59,7 +59,7 @@ class App extends Component {
 					}catch(e){
 						console.log(e);
 					}
-					window.location.assign(spotifyClientParams.redirect_uri);
+					window.location.assign(spotifyClientParams.redirect_uri.substring(0,spotifyClientParams.redirect_uri.indexOf("?")));
 				}catch(e){
 					console.log(e);
 				}
