@@ -35,13 +35,11 @@ class App extends Component {
 		let sessionId = this.getSessionCookie();
 		let user = null;
 		let queries = queryString.parse((window.location.href.split("?").length == 2) ? window.location.href.split("?")[1] : "");
-		if(!queries.code){ //we dont want to update the code from spotify into the redirect
-			spotifyClientParams.redirect_uri = window.location.href;
-			if(spotifyClientParams.redirect_uri.indexOf("?") > 0){
-				spotifyClientParams.redirect_uri = spotifyClientParams.redirect_uri.substring(0,(spotifyClientParams.redirect_uri.indexOf("?")-1));
-			}
-			console.log("\n\n\nspotifyCleintParams.redirect_uri:" + spotifyClientParams.redirect_uri)
+		spotifyClientParams.redirect_uri = window.location.href;
+		if(spotifyClientParams.redirect_uri.indexOf("?") > 0){
+			spotifyClientParams.redirect_uri = spotifyClientParams.redirect_uri.substring(0,(spotifyClientParams.redirect_uri.indexOf("?")-1));
 		}
+		console.log("\n\n\nspotifyClientParams.redirect_uri:" + spotifyClientParams.redirect_uri)
 		if(sessionId){
 			try{
 				user = await axios.get(`/users/verify/`+encodeURI(sessionId));
