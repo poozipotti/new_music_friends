@@ -31,36 +31,15 @@
         padding-top: 30px;
     }
 } 
-//sass for the submit (the area you type a message in
-#submitBox{
-    width:100%;
-    input{
-        border-right: none;
-        border-left: none;
-        boder-bottom: none;
-        border-top: 2px solid black;
-        width:90%;
-        margin-left:0;
-        height:50px;
-        padding:none;
-    }
-    button{
-        width:10%;
-        height:50px ;
-        border-right: none;
-        border-left: none;
-        border-bottom:none;
-        border-top: 2px solid black;
-        background: #f5f5f5;
-        padding:none;
-    } 
-}
+$totalChatHeight: 100vh;
+$submitHeight: 10vh;
 //for the chat log (the messages)
 #logBox{
     width:100%;
-	min-height: 450px;
-	height: 450px;
+	min-height: $totalChatHeight - $submitHeight;
 	overflow: auto;
+	background-color: #e1cbbe;
+	height: $totalChatHeight - $submitHeight;
     .message{
         p{
             width:100%;
@@ -90,7 +69,81 @@
 		margin-top: 20px;
     }
 }
+//sass for the submit (the area you type a message in
+#submitBox{
+    width:100%;
+	min-height: $submitHeight;
+	height: $submitHeight;
+	form{
+		height:100%;
+	}
+    input{
+        width:80%;
+        margin-left:0;
+        height:100%;
+        padding:none;
+    }
+    button{
+        width:20%;
+        height:100%;
+        border-right: none;
+        border-left: none;
+        border-bottom:none;
+        border-top: 2px solid black;
+        background: #f5f5f5;
+        padding:none;
+    } 
+}
+.songPanel{
+	position:fixed;
+	border: 4px solid $main-brand;
+	background-color:$light-blue;
+	top:(100%-60%)/2+10%;
+	left:(100%-30%)/2;
+	width: 30%;
+	height: 60%;
+	z-index: 4;
+	overflow: scroll;
+	button{
+		width: 100%;
+	}
+	input{
+		width: 80%;
+		background: 0 0;
+		background-color: $light-primary;
+		border-radius: 2px;
+		border: 4px solid $light-blue;
+		color: $main-brand;
+		font-size: 2em;
+		&::placeholder{
+			color: $main-brand;
+			font-style:italic;
+			opacity: .8;	
+		}
+	}
+	#searchButton{
+		width:20%;
+		float:right;
+	}
+	#submitButton{
+		width:20%;
+		float:right;
+	}
+	.artistName{
+		color: $dark-primary;
+	}
+	.selected{
+		background-color: $dark-accent;
+	}
+	h1{
+		text-align: center;
+	}
+}
+.noteInput{
+	background-color: $main-brand;
+	width:100%;
 
+}
 
 
 

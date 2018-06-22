@@ -6,7 +6,9 @@ class Chat extends Component {
         this.state = {
 			usernameText: "",
 			passwordText: "",
-			attemptedLogin: false
+			attemptedLogin: false,
+			attemptedSignup: false,
+			signupClicked: false
         };
 
         
@@ -20,11 +22,24 @@ class Chat extends Component {
     this.setState({passwordText});
   };
   render() {
-	let errorMessage = this.state.attemptedLogin ? "login failed" : null;
+	let titleText = (this.state.signupClicked ? "Signup" : "Login");
+	let errorMessage =(this.state.attemptedLogin || this.state.attemptedSignup) ? <p className="errorMessage">Something Went Wrong!</p> : null;
+	let submitButton = 
+		(<div>
+			<button onClick = {e => {e.preventDefualt;this.setState({signupClicked:true})}}>Signup</button>
+			<button type="submit" >Login</button>;	
+		</div>);
+	if(this.state.signupClicked){
+		submitButton = 
+		(<div>
+			<button onClick={e => {this.props.signup(this.state.usernameText,this.state.passwordText);this.setState({attemptedSignup:true})}}>Done</button>
+		</div>);
+	}	
 	return(
-		<div className="row loginContainer justify-content-center">
-			<div id="loginBox" className="col-3">
-				<h1 className="text-center text-light" style={{ margin: 30 }}>Login</h1>
+		<div id="loginBox" className="row justify-content-center">
+			<div className="col-md-6 col-sm-12">
+				<h1 className="text-center">New Music Friends</h1>
+				<h2 className="text-center">{titleText}</h2>
 				<form onSubmit= { e => {e.preventDefault();this.props.login(this.state.usernameText,this.state.passwordText);this.setState({attemptedLogin:true})}}>
 					<input type="text" placeholder="username" 
 						   value={this.state.usernameText} 
@@ -41,9 +56,8 @@ class Chat extends Component {
 							}}>
 					</input>
 					{errorMessage}
-					<button type="submit" style={{margin: 10}}>Login</button>
+					{submitButton}
 				</form>
-					<button style={{margin: 10}} onClick={e => {this.props.signup(this.state.usernameText,this.state.passwordText)}}>Signup</button>
 			</div>
 		</div>
 	);

@@ -56,11 +56,10 @@ class Log extends Component {
 		}
 		let buttons = <PlaylistPanel chat={this.props.chat} username={this.props.username} complete={complete} submitSong={this.props.submitSong}/>;
 	 	if(myUser.uri ){
-			 buttons = <iframe src={"https://open.spotify.com/embed?uri=" + myUser.uri + "&view=coverart"} width="322" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>;
+			//buttons = <iframe src={"https://open.spotify.com/embed?uri=" + myUser.uri + "&view=coverart"} width="322" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>;
 		}
     return (
         <div>
-        <h1>{this.props.roomTitle}</h1>
 		<div className="row">
 			<div className="col-12">
 				{buttons}

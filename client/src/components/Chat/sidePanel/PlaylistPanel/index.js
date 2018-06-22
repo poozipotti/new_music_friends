@@ -27,7 +27,7 @@ class PlaylistPanel extends Component {
   render() {
 	let songList = null;
 	let playlistPanel = null;
-	let playlistButton = <button onClick={e => {this.setState({clicked : !this.state.clicked })}}>view playlist</button>;
+	let playlistButton = <button className="fixedButton" onClick={e => {this.setState({clicked : !this.state.clicked })}}>view playlist</button>;
 	let newSongComponent = null;
 	let myUser = this.props.chat.users.find((user) => {return user.username === this.props.username});
 	let addSong = null;

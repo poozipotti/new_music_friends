@@ -152,7 +152,7 @@ class App extends Component {
 	if(this.state.username){
 		usernameDisplay = (
 			<div>
-				<button onClick = {e => {this.logout()}}>logout</button>
+				<button onClick = {e => {this.logout()}} className="fixedButton" id="logoutButton">logout</button>
 			</div>
 		);
 	}
@@ -163,14 +163,6 @@ class App extends Component {
 	}
     return (
 		<div className="App">
-			<div className="row mainHeader" style={{height:200}}>
-				<div className="col-12">	
-				  <img src={logo} className="img-fluid mx-auto d-block" alt="logo" style={{height:80}}/>
-				</div>
-				<div className="col-12">	
-				  <h1 className="text-center">~~New Music Friends~~</h1>
-				</div>
-			</div>  
 			{usernameDisplay}
 			{body}
 		</div>

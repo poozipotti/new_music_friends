@@ -3,83 +3,106 @@
 @import "./bootstrap/scss/bootstrap.scss";
 
 
-
 * {
     box-sizing: border-box;
 }
-html,body{
-    background: $light-primary;
-    font-size: $primary-font-size;
+.App{
+	height:100%;
+}
+html,body,.col,.row{
+    //font-size: $primary-font-size;
+	$background-color: #e1cbbe;
+	background:radial-gradient(rgba($background-color, 10),rgba($background-color,.6)),url("../flowerprint.jpg");
 }
 
 p {
     font-size: $secondary-font-size;
 }
-.mainHeader{
-	background: $light-blue;
-	border-bottom: 5px solid $main-brand;
-	h1{
-		color: $main-brand;
-	}
+.fixedButton{
+	position:absolute;
+	z-index: 10;
+	
 }
-.loginContainer{
-	background-color: $light-primary;
-}
-#loginBox{
-	margin-top: 100px;
-	background-color: $main-brand;
-	button{
-		background: 0 0;
-		border-radius: 4px;
-		cursor: pointer;
-		display: block;
-		height: 60px;
-		line-height: 60px;
-		padding: 0 30px 0 25px;
-		position: relative;
-		border: 4px solid $light-primary;
-		font-size: 1.3em;
-		font-weight: bold;
-		color: $light-primary;
-		overflow: hidden;
-		float: right;
-	}
-	input{
-		width: 90%;
-		background: 0 0;
-		background-color: lighten($main-brand,7);
-		border-radius: 2px;
-		border: 4px solid $light-primary;
-		color: $light-primary;
-		font-size: 1.3em;
-		&::placeholder{
-			color: $light-primary;
-			font-style:italic;
-			opacity: .8;	
-		}
-	}
+#logoutButton{
+	height: 60px;
+	width:10%;
+	top:1%;
+	left:89%;
 }
 button{
 	background: 0 0;
 	border-radius: 4px;
 	cursor: pointer;
 	display: block;
-	height: 60px;
 	line-height: 60px;
 	padding: 0 30px 0 25px;
 	position: relative;
-	border: 4px solid $main-brand;
+	border: 4px solid $dark-primary;
 	font-size: 1.3em;
 	font-weight: bold;
-	color: $main-brand;
 	overflow: hidden;
 	float: right;
+	background-color: $dark-primary;
+	color: $light-primary;
 	&:hover{
-		background-color: $main-brand;
-		color: $light-primary;
+		background-color: lighten($dark-primary,.8);
+		color: darken($light-primary,.9);
 	}
 	.selected{
 		background-color: $dark-accent;
+	}
+}
+.errorMessage{
+	color: $dark-accent;
+	font-weight: bold;
+}
+#loginBox{
+	background-color: rgba(white,0);
+	height: 100vh;	
+	p{
+		margin-left:5%;
+		
+	}
+	h1{
+		color: $dark-primary;
+		margin-top:20%;
+	}
+	h2{
+		color: $dark-primary;
+	}
+	button{
+		height: 60px;
+		width:30%;
+		margin-left:10%;
+		margin-right:10%;
+		color: $dark-primary;
+		background-color: rgba(white,0);
+		border: 4px solid $dark-primary;
+		&:hover{
+			background-color: $dark-primary;;
+			color: $light-primary;
+		}
+	}
+	input{
+		width: 90%;
+		margin-left: 5%;
+		margin-top:5%;
+		margin-bottom:5%;
+		background: 0 0;
+		border-radius: 2px;
+		border: 4px solid $dark-primary;
+		color: $dark-primary;
+		font-size: 1.7em;
+		&::placeholder{
+			color: $dark-primary;
+			font-style:italic;
+			opacity: .8;	
+		}
+		@media screen and(min-width: $break-small){
+			font-size: 2.5em;
+			margin-top: 2.5%;
+			margin-bottom: 2.5%;
+		}
 	}
 }
 .selected{
@@ -114,55 +137,5 @@ input{
 		font-style:italic;
 		opacity: .8;	
 	}
-}
-.songPanel{
-	position:fixed;
-	border: 4px solid $main-brand;
-	background-color:$light-blue;
-	top:(100%-60%)/2+10%;
-	left:(100%-30%)/2;
-	width: 30%;
-	height: 60%;
-	z-index: 4;
-	overflow: scroll;
-	button{
-		width: 100%;
-	}
-	input{
-		width: 80%;
-		background: 0 0;
-		background-color: $light-primary;
-		border-radius: 2px;
-		border: 4px solid $light-blue;
-		color: $main-brand;
-		font-size: 2em;
-		&::placeholder{
-			color: $main-brand;
-			font-style:italic;
-			opacity: .8;	
-		}
-	}
-	#searchButton{
-		width:20%;
-		float:right;
-	}
-	#submitButton{
-		width:20%;
-		float:right;
-	}
-	.artistName{
-		color: $dark-primary;
-	}
-	.selected{
-		background-color: $dark-accent;
-	}
-	h1{
-		text-align: center;
-	}
-}
-.noteInput{
-	background-color: $main-brand;
-	width:100%;
-
 }
 
