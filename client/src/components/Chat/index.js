@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import NewSong from "./NewSong";
 import Log from "./Log";
-import NewChat from "./NewChat";
-import Chats from "./Chats";
+import SidePanel from "./SidePanel";
 import io from 'socket.io-client';
 const axios = require("axios");
 
@@ -17,7 +17,8 @@ class Chat extends Component {
             socket: io.connect(socketUri),
             joinedChats: [],
 			activeChat: null,
-			selectedSong: null
+			selectedSong: null,
+			menuActive: true
         };
 		socketUri = window.location.href;
         this.updateMessages = this.updateMessages.bind(this);
@@ -27,6 +28,7 @@ class Chat extends Component {
         this.updateJoinedChats = this.updateJoinedChats.bind(this);
         this.addChat = this.addChat.bind(this);
         this.setActiveChat = this.setActiveChat.bind(this);
+        this.activateMenu = this.activateMenu.bind(this);
         this.selectSong = this.selectSong.bind(this);
         
   }
@@ -183,24 +185,34 @@ class Chat extends Component {
   selectSong(song){
 	this.setState({selectedSong:song});
   }
-   
+  activateMenu(){
+	this.setState({menuActive:!this.state.menuActive});
+  } 
 
     //renders the chat
   render() {
     let submit = null;
     let log= null;
+	let sidePanel=null;
+	sidePanel =	<SidePanel activeChat={this.state.activeChat} username={this.props.username} addChat={this.addChat} joinedChats={this.state.joinedChats} setActiveChat = {this.setActiveChat} submitSong={this.submitSong}/>
     if(this.state.activeChat !== null && this.state.joinedChats[this.state.activeChat] !== undefined){
-		log = <Log chat={this.state.joinedChats[this.state.activeChat]} roomTitle={`selected Song: ${this.state.activeSong.name}`} username={this.props.username} submitSong={this.submitSong} messages={this.state.messages} sendMessage={this.sendMessage}/>
+		let addSong =<NewSong username={this.props.username} chat={this.state.joinedChats[this.state.activeChat]} selectSong={this.selectSong} submitSong={this.submitSong}/> ;
+		let myUser = this.state.joinedChats[this.state.activeChat].users.find((user) => {return user.username === this.props.username});
+	
+		if(myUser && myUser.song){
+			log = <Log chat={this.state.joinedChats[this.state.activeChat]} roomTitle={`selected Song: ${this.state.activeSong.name}`} username={this.props.username} messages={this.state.messages} sendMessage={this.sendMessage}/>
+		}else{
+			log = addSong;
+		}
     }
     return (
         <div className="chatBox row">
-            <div className="col-3">
-				<NewChat username={this.props.username} addChat={this.addChat}/>	
-				<Chats joinedChats={this.state.joinedChats} setActiveChat={this.setActiveChat} />
+            <div className="col-2">
+				{sidePanel}
             </div>
-            <div className="col-9">
-            {log}
-            {submit}
+            <div className="col-10">
+				{log}
+				{submit}
             </div>
         </div>
     );

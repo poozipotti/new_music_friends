@@ -8,8 +8,10 @@ class Chat extends Component {
   constructor(props){
         super(props);
         this.state = {
-			mode: 0,
-			activated: false
+			users: [],
+			selectedUsers: [],
+			submittedUsers: false,
+			chatName:""
         };
 
         
@@ -30,7 +32,7 @@ class Chat extends Component {
     this.setState({chatName:chatNameText});
   }
   deactivate(){
-		this.setState({clicked:false,selectedUsers:[]});
+		this.setState({selectedUsers:[]});
   }
   selectUser(username){
 	let temp = this.state.selectedUsers;
@@ -47,7 +49,6 @@ class Chat extends Component {
 	let userList = null;
 	let userPanel = null;
 	let selected = "";
-	if(this.state.clicked){
 		if(this.state.submittedUsers){
 			userPanel = 
 			(
@@ -86,7 +87,6 @@ class Chat extends Component {
 			});
 		userPanel = (
 			<div className="userPanel">
-				<button onClick= {e => {this.deactivate()}}>X</button>
 				<h1>start chat</h1>
 				{userList}
 				<button onClick={e => {this.setState({submittedUsers:true})}}> done </button>
@@ -95,10 +95,8 @@ class Chat extends Component {
 	   }
 
 		
-	}
 	return (
 		<div>
-		<button onClick={e => {this.setState({clicked: !this.state.clicked });}}>+</button>
 		{userPanel}
 		</div>
 	)

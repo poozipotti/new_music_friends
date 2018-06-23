@@ -5,32 +5,26 @@
 .chatBox{
     min-height:80vh;
 }
-
-//sass for the add user button this can be used in multiple places
- #userBox{
-    background:#FDFDFD;
-    min-height: 100%;
-    margin-right: 0;
-	border-right:solid $main-brand 5px ;
-    button{
-        background: none;
-        width:100%;
-        //border-bottom: 1px solid black;
-        //border-top: 1px solid black;
-        border:none;
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
-    button:hover{
-         background:rgba(0,0,0,.1);
-    }
-    h1{
-		color: $dark-primary;
-        width:100%;
-        margin-bottom: 10px;
-        padding-top: 30px;
-    }
-} 
+.sidePanel{
+	button{
+		width: 33%;
+	}
+	.menuButton{
+		width:33%;
+	}
+	
+}
+.userPanel{
+	button{
+		width: 100%
+	}
+}
+.chatsPanel{
+	button{
+		width:100%;
+	}
+	color: $dark-primary;
+}
 $totalChatHeight: 100vh;
 $submitHeight: 10vh;
 //for the chat log (the messages)
@@ -95,40 +89,6 @@ $submitHeight: 10vh;
     } 
 }
 .songPanel{
-	position:fixed;
-	border: 4px solid $main-brand;
-	background-color:$light-blue;
-	top:(100%-60%)/2+10%;
-	left:(100%-30%)/2;
-	width: 30%;
-	height: 60%;
-	z-index: 4;
-	overflow: scroll;
-	button{
-		width: 100%;
-	}
-	input{
-		width: 80%;
-		background: 0 0;
-		background-color: $light-primary;
-		border-radius: 2px;
-		border: 4px solid $light-blue;
-		color: $main-brand;
-		font-size: 2em;
-		&::placeholder{
-			color: $main-brand;
-			font-style:italic;
-			opacity: .8;	
-		}
-	}
-	#searchButton{
-		width:20%;
-		float:right;
-	}
-	#submitButton{
-		width:20%;
-		float:right;
-	}
 	.artistName{
 		color: $dark-primary;
 	}

@@ -14,9 +14,11 @@ class ChatsPanel extends Component {
                             </button>);
            }
         });
-    }
+    }else{
+		<p className="center-text"> no chats found </p>
+	}
     return (
-        <div id="userBox">
+        <div className="chatsPanel">
            <h1>Chats</h1> 
           {ChatList} 
         </div>
