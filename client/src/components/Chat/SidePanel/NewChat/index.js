@@ -4,7 +4,7 @@ const uuid = require("node-uuid");
 
 
 
-class Chat extends Component {
+class NewChat extends Component {
   constructor(props){
         super(props);
         this.state = {
@@ -53,7 +53,7 @@ class Chat extends Component {
 			userPanel = 
 			(
 				<div className="userPanel">
-				<form onSubmit= { e => {e.preventDefault();this.props.addChat(this.state.selectedUsers.concat([this.props.username]),this.state.chatName);this.deactivate();}}>
+				<form onSubmit= { e => {e.preventDefault();this.props.addChat(this.state.selectedUsers.concat([this.props.username]),this.state.chatName);this.deactivate();this.props.resetMenu()}}>
 					<input type="text" placeholder="chat name!" 
 						   value={this.state.searchText} 
 						   onChange={e => {
@@ -103,4 +103,4 @@ class Chat extends Component {
   }
 };
 
-export default Chat;
+export default NewChat;

@@ -17,17 +17,20 @@ class SidePanel extends Component {
   }
   async componentDidMount(){
   }
+  resetMenu(){
+	this.setState({selectedItem:2});
+  }
   render() {
 	let menuItems= [
 		<NewChat username={this.props.username} addChat={this.props.addChat}/>,
-		<Chats joinedChats={this.props.joinedChats} setActiveChat={this.props.setActiveChat} />
+		<Chats joinedChats={this.props.joinedChats} setActiveChat={this.props.setActiveChat}/>
 	];
 	if(this.props.activeChat){
 		menuItems.push(<PlaylistPanel chat={this.props.joinedChats[this.props.activeChat]} username={this.props.username} submitSong={this.props.submitSong}/>);
 	}
 	return (
 		<div className="sidePanel">
-				<button onClick= {e => {this.setState({selectedItem:parseInt(e.target.value)})}} value={0}>users</button>
+				<button onClick= {e => {this.setState({selectedItem:parseInt(e.target.value)})}} value={0} resetMenu={this.resetMenu}>new</button>
 				<button  onClick= {e => {this.setState({selectedItem:parseInt(e.target.value)})}} value={1}>chats</button>
 				<button  onClick= {e => {this.setState({selectedItem:parseInt(e.target.value)})}} value={2}>playlist</button>
 				{menuItems[this.state.selectedItem]}

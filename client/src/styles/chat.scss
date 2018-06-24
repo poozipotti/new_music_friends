@@ -6,24 +6,45 @@
     min-height:80vh;
 }
 .sidePanel{
+	width:100%;
+	height:100vh;
+	color: $dark-primary;
 	button{
 		width: 33%;
+		background: rgba(white,0);
+		color:$dark-primary;
+		border: 1px solid ($dark-primary);;
 	}
 	.menuButton{
 		width:33%;
 	}
+	border-right: 3px solid ($dark-primary);;
 	
 }
 .userPanel{
 	button{
-		width: 100%
+		width: 100%;
 	}
 }
 .chatsPanel{
 	button{
 		width:100%;
+		height:70px;
+		margin: 0;
+		background-color: rgba(#e1cbbe,0);
 	}
-	color: $dark-primary;
+	.selected{
+		background-color: rgba(#e1cbbe,.9);
+	}	
+	h1{
+		border: 2px solid ($dark-primary);
+		margin: 0;
+	}
+	color: darken($dark-primary,10);
+	overflow-y:scroll;
+	overflow-x: hidden;
+	height:100vh;
+	width:100%;
 }
 $totalChatHeight: 100vh;
 $submitHeight: 10vh;
@@ -32,8 +53,8 @@ $submitHeight: 10vh;
     width:100%;
 	min-height: $totalChatHeight - $submitHeight;
 	overflow: auto;
-	background-color: #e1cbbe;
 	height: $totalChatHeight - $submitHeight;
+	background-color: rgba(#e1cbbe,.7);
     .message{
         p{
             width:100%;
@@ -88,12 +109,74 @@ $submitHeight: 10vh;
         padding:none;
     } 
 }
-.songPanel{
-	.artistName{
+.addSong{	
+	background-color: rgba(white,0);
+	height: 100vh;	
+	p{
+		margin-left:5%;
+		
+	}
+	h1{
+		color: $dark-primary;
+		margin-top:15%;
+	}
+	h2{
 		color: $dark-primary;
 	}
+	button{
+		height: 60px;
+		color: $dark-primary;
+		background-color: rgba(white,0);
+		border: 4px solid $dark-primary;
+		&:hover{
+			background-color: $dark-primary;;
+			color: $light-primary;
+		}
+	}
+	.submitButton{
+		display: none;
+	}	
+	.menuButton{
+		width: 50%;
+	}
+	.songList{
+		height: 25vh;	
+		width: 100%;
+		overflow-y: scroll;
+		overflow-x: hidden;
+	}
+	input{
+		width: 80%;
+		margin-left: 5%;
+		margin-top:5%;
+		margin-bottom:5%;
+		background: 0 0;
+		border-radius: 2px;
+		border: 4px solid $dark-primary;
+		color: $dark-primary;
+		font-size: 1.7em;
+		&::placeholder{
+			color: $dark-primary;
+			font-style:italic;
+			opacity: .8;	
+		}
+		@media screen and(min-width: $break-small){
+			font-size: 2.5em;
+			margin-top: 2.5%;
+			margin-bottom: 2.5%;
+		}
+	}
+	#addSongButton{
+		width:40%;
+		margin-left:50%;
+	}
+	height:100%;
+	.artistName{
+		color: $dark-accent;
+	}
 	.selected{
-		background-color: $dark-accent;
+		background-color: $dark-primary;
+		color: $light-primary;
 	}
 	h1{
 		text-align: center;

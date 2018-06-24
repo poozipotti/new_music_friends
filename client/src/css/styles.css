@@ -2,26 +2,45 @@
 .chatBox {
   min-height: 80vh; }
 
-.sidePanel button {
-  width: 33%; }
-
-.sidePanel .menuButton {
-  width: 33%; }
+.sidePanel {
+  width: 100%;
+  height: 100vh;
+  color: #435767;
+  border-right: 3px solid #435767; }
+  .sidePanel button {
+    width: 33%;
+    background: rgba(255, 255, 255, 0);
+    color: #435767;
+    border: 1px solid #435767; }
+  .sidePanel .menuButton {
+    width: 33%; }
 
 .userPanel button {
   width: 100%; }
 
 .chatsPanel {
-  color: #435767; }
+  color: #2f3d48;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100vh;
+  width: 100%; }
   .chatsPanel button {
-    width: 100%; }
+    width: 100%;
+    height: 70px;
+    margin: 0;
+    background-color: rgba(225, 203, 190, 0); }
+  .chatsPanel .selected {
+    background-color: rgba(225, 203, 190, 0.9); }
+  .chatsPanel h1 {
+    border: 2px solid #435767;
+    margin: 0; }
 
 #logBox {
   width: 100%;
   min-height: 90vh;
   overflow: auto;
-  background-color: #e1cbbe;
-  height: 90vh; }
+  height: 90vh;
+  background-color: rgba(225, 203, 190, 0.7); }
   #logBox .message p {
     width: 100%; }
   #logBox .own-message {
@@ -65,14 +84,63 @@
     background: #f5f5f5;
     padding: none; }
 
-.songPanel .artistName {
-  color: #435767; }
-
-.songPanel .selected {
-  background-color: #538251; }
-
-.songPanel h1 {
-  text-align: center; }
+.addSong {
+  background-color: rgba(255, 255, 255, 0);
+  height: 100vh;
+  height: 100%; }
+  .addSong p {
+    margin-left: 5%; }
+  .addSong h1 {
+    color: #435767;
+    margin-top: 15%; }
+  .addSong h2 {
+    color: #435767; }
+  .addSong button {
+    height: 60px;
+    color: #435767;
+    background-color: rgba(255, 255, 255, 0);
+    border: 4px solid #435767; }
+    .addSong button:hover {
+      background-color: #435767;
+      color: #F8F7F3; }
+  .addSong .submitButton {
+    display: none; }
+  .addSong .menuButton {
+    width: 50%; }
+  .addSong .songList {
+    height: 25vh;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden; }
+  .addSong input {
+    width: 80%;
+    margin-left: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    background: 0 0;
+    border-radius: 2px;
+    border: 4px solid #435767;
+    color: #435767;
+    font-size: 1.7em; }
+    .addSong input::placeholder {
+      color: #435767;
+      font-style: italic;
+      opacity: .8; }
+    @media screen and (min-width: 420px) {
+      .addSong input {
+        font-size: 2.5em;
+        margin-top: 2.5%;
+        margin-bottom: 2.5%; } }
+  .addSong #addSongButton {
+    width: 40%;
+    margin-left: 50%; }
+  .addSong .artistName {
+    color: #538251; }
+  .addSong .selected {
+    background-color: #435767;
+    color: #F8F7F3; }
+  .addSong h1 {
+    text-align: center; }
 
 .noteInput {
   background-color: #F3544F;
@@ -594,8 +662,8 @@ pre {
 
 .container {
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 0px;
+  padding-left: 0px;
   margin-right: auto;
   margin-left: auto; }
   @media (min-width: 576px) {
@@ -613,16 +681,16 @@ pre {
 
 .container-fluid {
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 0px;
+  padding-left: 0px;
   margin-right: auto;
   margin-left: auto; }
 
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px; }
+  margin-right: 0px;
+  margin-left: 0px; }
 
 .no-gutters {
   margin-right: 0;
@@ -641,8 +709,8 @@ pre {
   position: relative;
   width: 100%;
   min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px; }
+  padding-right: 0px;
+  padding-left: 0px; }
 
 .col {
   flex-basis: 0;
@@ -3004,25 +3072,25 @@ tbody.collapse.show {
   display: flex;
   flex-direction: column; }
   .card-deck .card {
-    margin-bottom: 15px; }
+    margin-bottom: 0px; }
   @media (min-width: 576px) {
     .card-deck {
       flex-flow: row wrap;
-      margin-right: -15px;
-      margin-left: -15px; }
+      margin-right: 0px;
+      margin-left: 0px; }
       .card-deck .card {
         display: flex;
         flex: 1 0 0%;
         flex-direction: column;
-        margin-right: 15px;
+        margin-right: 0px;
         margin-bottom: 0;
-        margin-left: 15px; } }
+        margin-left: 0px; } }
 
 .card-group {
   display: flex;
   flex-direction: column; }
   .card-group .card {
-    margin-bottom: 15px; }
+    margin-bottom: 0px; }
   @media (min-width: 576px) {
     .card-group {
       flex-flow: row wrap; }
@@ -5964,6 +6032,7 @@ a.text-dark:focus, a.text-dark:hover {
   height: 100%; }
 
 html, body, .col, .row {
+  overflow: hidden;
   background: radial-gradient(#e1cbbe, rgba(225, 203, 190, 0.6)), url("../flowerprint.jpg"); }
 
 p {
@@ -5975,7 +6044,6 @@ p {
 
 #logoutButton {
   height: 60px;
-  width: 10%;
   top: 1%;
   left: 89%; }
 
@@ -6064,26 +6132,45 @@ input {
 .chatBox {
   min-height: 80vh; }
 
-.sidePanel button {
-  width: 33%; }
-
-.sidePanel .menuButton {
-  width: 33%; }
+.sidePanel {
+  width: 100%;
+  height: 100vh;
+  color: #435767;
+  border-right: 3px solid #435767; }
+  .sidePanel button {
+    width: 33%;
+    background: rgba(255, 255, 255, 0);
+    color: #435767;
+    border: 1px solid #435767; }
+  .sidePanel .menuButton {
+    width: 33%; }
 
 .userPanel button {
   width: 100%; }
 
 .chatsPanel {
-  color: #435767; }
+  color: #2f3d48;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100vh;
+  width: 100%; }
   .chatsPanel button {
-    width: 100%; }
+    width: 100%;
+    height: 70px;
+    margin: 0;
+    background-color: rgba(225, 203, 190, 0); }
+  .chatsPanel .selected {
+    background-color: rgba(225, 203, 190, 0.9); }
+  .chatsPanel h1 {
+    border: 2px solid #435767;
+    margin: 0; }
 
 #logBox {
   width: 100%;
   min-height: 90vh;
   overflow: auto;
-  background-color: #e1cbbe;
-  height: 90vh; }
+  height: 90vh;
+  background-color: rgba(225, 203, 190, 0.7); }
   #logBox .message p {
     width: 100%; }
   #logBox .own-message {
@@ -6127,14 +6214,63 @@ input {
     background: #f5f5f5;
     padding: none; }
 
-.songPanel .artistName {
-  color: #435767; }
-
-.songPanel .selected {
-  background-color: #538251; }
-
-.songPanel h1 {
-  text-align: center; }
+.addSong {
+  background-color: rgba(255, 255, 255, 0);
+  height: 100vh;
+  height: 100%; }
+  .addSong p {
+    margin-left: 5%; }
+  .addSong h1 {
+    color: #435767;
+    margin-top: 15%; }
+  .addSong h2 {
+    color: #435767; }
+  .addSong button {
+    height: 60px;
+    color: #435767;
+    background-color: rgba(255, 255, 255, 0);
+    border: 4px solid #435767; }
+    .addSong button:hover {
+      background-color: #435767;
+      color: #F8F7F3; }
+  .addSong .submitButton {
+    display: none; }
+  .addSong .menuButton {
+    width: 50%; }
+  .addSong .songList {
+    height: 25vh;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden; }
+  .addSong input {
+    width: 80%;
+    margin-left: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    background: 0 0;
+    border-radius: 2px;
+    border: 4px solid #435767;
+    color: #435767;
+    font-size: 1.7em; }
+    .addSong input::placeholder {
+      color: #435767;
+      font-style: italic;
+      opacity: .8; }
+    @media screen and (min-width: 420px) {
+      .addSong input {
+        font-size: 2.5em;
+        margin-top: 2.5%;
+        margin-bottom: 2.5%; } }
+  .addSong #addSongButton {
+    width: 40%;
+    margin-left: 50%; }
+  .addSong .artistName {
+    color: #538251; }
+  .addSong .selected {
+    background-color: #435767;
+    color: #F8F7F3; }
+  .addSong h1 {
+    text-align: center; }
 
 .noteInput {
   background-color: #F3544F;
@@ -6656,8 +6792,8 @@ pre {
 
 .container {
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 0px;
+  padding-left: 0px;
   margin-right: auto;
   margin-left: auto; }
   @media (min-width: 576px) {
@@ -6675,16 +6811,16 @@ pre {
 
 .container-fluid {
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 0px;
+  padding-left: 0px;
   margin-right: auto;
   margin-left: auto; }
 
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px; }
+  margin-right: 0px;
+  margin-left: 0px; }
 
 .no-gutters {
   margin-right: 0;
@@ -6703,8 +6839,8 @@ pre {
   position: relative;
   width: 100%;
   min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px; }
+  padding-right: 0px;
+  padding-left: 0px; }
 
 .col {
   flex-basis: 0;
@@ -9066,25 +9202,25 @@ tbody.collapse.show {
   display: flex;
   flex-direction: column; }
   .card-deck .card {
-    margin-bottom: 15px; }
+    margin-bottom: 0px; }
   @media (min-width: 576px) {
     .card-deck {
       flex-flow: row wrap;
-      margin-right: -15px;
-      margin-left: -15px; }
+      margin-right: 0px;
+      margin-left: 0px; }
       .card-deck .card {
         display: flex;
         flex: 1 0 0%;
         flex-direction: column;
-        margin-right: 15px;
+        margin-right: 0px;
         margin-bottom: 0;
-        margin-left: 15px; } }
+        margin-left: 0px; } }
 
 .card-group {
   display: flex;
   flex-direction: column; }
   .card-group .card {
-    margin-bottom: 15px; }
+    margin-bottom: 0px; }
   @media (min-width: 576px) {
     .card-group {
       flex-flow: row wrap; }

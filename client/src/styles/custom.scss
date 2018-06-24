@@ -11,6 +11,7 @@
 }
 html,body,.col,.row{
     //font-size: $primary-font-size;
+	overflow: hidden;
 	$background-color: #e1cbbe;
 	background:radial-gradient(rgba($background-color, 10),rgba($background-color,.6)),url("../flowerprint.jpg");
 }
@@ -25,7 +26,6 @@ p {
 }
 #logoutButton{
 	height: 60px;
-	width:10%;
 	top:1%;
 	left:89%;
 }
