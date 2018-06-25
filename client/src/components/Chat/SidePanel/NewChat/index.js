@@ -53,7 +53,7 @@ class NewChat extends Component {
 			userPanel = 
 			(
 				<div className="userPanel">
-				<form onSubmit= { e => {e.preventDefault();this.props.addChat(this.state.selectedUsers.concat([this.props.username]),this.state.chatName);this.deactivate();this.props.resetMenu()}}>
+				<form onSubmit= { e => {e.preventDefault();this.props.addChat(this.state.selectedUsers.concat([this.props.username]),this.state.chatName);this.props.resetMenu();this.deactivate();}}>
 					<input type="text" placeholder="chat name!" 
 						   value={this.state.searchText} 
 						   onChange={e => {
@@ -61,7 +61,7 @@ class NewChat extends Component {
 								this.changechatNameText(e.target.value)
 							}}>
 					</input>
-					<button type="submit" id="searchButton">done</button>
+					<button type="submit" className="submitButton">done</button>
 				</form>
 				</div>
 			)
@@ -89,7 +89,7 @@ class NewChat extends Component {
 			<div className="userPanel">
 				<h1>start chat</h1>
 				{userList}
-				<button onClick={e => {this.setState({submittedUsers:true})}}> done </button>
+				<button className="submitButton" onClick={e => {this.setState({submittedUsers:true})}}> done </button>
 			</div>
 		)
 	   }
